@@ -24,8 +24,9 @@ import com.markupartist.android.widget.ActionBar.Action;
 public class MainActivity extends Activity {
 	private static final String TAG = "midi-browser";
 
-	// private static final String homeUrl = "http://www.duosuccess.com";
-	private static final String homeUrl = "http://rick-li.github.com/android-midi/test.html";
+	private static final String homeUrl = "http://www.duosuccess.com";
+	// private static final String homeUrl =
+	// "http://rick-li.github.com/android-midi/test.html";
 	// private String homeUrl = "http://www.baidu.com";
 	private String strBaseDir = Environment.getExternalStorageDirectory()
 			.getPath() + "/duosuccess";
