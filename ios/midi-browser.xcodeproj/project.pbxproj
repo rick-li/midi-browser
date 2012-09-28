@@ -13,7 +13,7 @@
 		7E5EAB1F1614360600787E0A /* forw.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E5EAB1B1614360600787E0A /* forw.png */; };
 		7E5EAB201614360600787E0A /* mu80.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7E5EAB1C1614360600787E0A /* mu80.sf2 */; };
 		7E5EAB211614360600787E0A /* piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7E5EAB1D1614360600787E0A /* piano.sf2 */; };
-		7E5EAB281614592800787E0A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EAB271614592800787E0A /* Reachability.m */; };
+		7E5EAB281614592800787E0A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EAB271614592800787E0A /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7E5EAB2B161459BE00787E0A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5EAB291614599600787E0A /* SystemConfiguration.framework */; };
 		7E5EAB2D161460F100787E0A /* home2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E5EAB2C161460F100787E0A /* home2.png */; };
 		7E5EAB301614787C00787E0A /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5EAB2F1614787C00787E0A /* MBProgressHUD.m */; };

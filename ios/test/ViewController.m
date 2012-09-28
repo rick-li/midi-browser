@@ -5,11 +5,12 @@
 //  Created by rick li on 9/24/12.
 //  Copyright (c) 2012 duosuccess. All rights reserved.
 //
+#import <AVFoundation/AVFoundation.h>
+#import <CoreAudio/CoreAudioTypes.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 #import "ViewController.h"
 #import "Reachability.h"
 #import "MBProgressHUD.h"
-#import <AVFoundation/AVFoundation.h>
-#import <CoreAudio/CoreAudioTypes.h>
 
 
 @interface ViewController ()
@@ -39,7 +40,7 @@ NSString *homeUrl = @"http://www.duosuccess.com";
 //NSString *homeUrl = @"http://10.114.191.51/midi/test2.html";
 
 NSString *tmpDir;
-NSTimer *timer;
+NSTimer *oneHourTimer;
 
 AUGraph _processingGraph;
 AudioUnit samplerUnit;
@@ -50,67 +51,72 @@ AudioUnit samplerUnit;
 	// Do any additional setup after loading the view, typically from a nib.
     
     webView.delegate=self;
-    
-    BOOL audioSessionActivated = [self setupAudioSession];
-    NSLog(@"audioSessionActivated = %d", audioSessionActivated);
-    
-    [self createAUGraph];
-    OSStatus result = noErr;
-    if (self.processingGraph) {
-        
-        
-        //see http://developer.apple.com/library/ios/#documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Cookbook/Cookbook.html
-        UInt32 maximumFramesPerSlice = 4096;
-        
-        AudioUnitSetProperty (
-                              self.samplerUnit,
-                              kAudioUnitProperty_MaximumFramesPerSlice,
-                              kAudioUnitScope_Global,
-                              0,                        // global scope always uses element 0
-                              &maximumFramesPerSlice,
-                              sizeof (maximumFramesPerSlice)
-                              );
-        // Initialize the audio processing graph.
-        result = AUGraphInitialize (self.processingGraph);
-        NSAssert (result == noErr, @"Unable to initialze AUGraph object. Error code: %d '%.4s'", (int) result, (const char *)&result);
-    }
-    // Load the ound font from file
-    NSURL *presetURL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:
-                                                           //@"gorts_mini_piano" ofType:@"sf2"]];
-                                                           
-                                                           //@"u20" ofType:@"sf2"]];
-                                                           @"piano" ofType:@"sf2"]];
-    
-    
-    
-    // Initialise the sound font
-    //#12 #13
-    [self loadFromDLSOrSoundFont: (NSURL *)presetURL withPatch: (int)1];
-    
-    [self clearCache];
     //enable Zoom
     webView.scalesPageToFit = YES;
-    [self loadHome];
- 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+    
+    [self setupAudioSession];
+    
+    [self createAUGraph];
+    
+    [self postInitGragh];
+    
+    [self clearCache];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+    
+    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kReachabilityChangedNotification object:nil];
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+    
+    
+  //  [[NSNotificationCenter defaultCenter] postNotificationName:kReachabilityChangedNotification object:nil];
     
     internetReachable = [Reachability reachabilityForInternetConnection];
     [internetReachable startNotifier];
+    
+//    NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
+//    
+//    if(remoteHostStatus == NotReachable) {
+//        [self noNetworkAvailable];
+//        
+//    }
+    
+    [self loadHome];
+    
+}
+
+-(void) handleOneHourTimer{
+    NSLog(@"1 hour arrived, loading home page.");
+    [self loadHome];
+}
+-(void) invalidateTimer{
+    if(oneHourTimer){
+        NSLog(@"invalidate timer.");
+        [oneHourTimer invalidate];
+    }
+}
+-(void) noNetworkAvailable{
+    NSLog(@"network not available.");
+    [MBProgressHUD hideHUDForView:self.webView animated:YES];
+    [self stopMedia];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"无网络连接"
+                                                      message:@"请检查网络连接并刷新页面"
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
 }
 
 -(void) checkNetworkStatus:(NSNotification *)notice
 {
-    // called after network status changes
-    NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
-    switch (internetStatus)
-    {
-        case NotReachable:
-        {
-            NSLog(@"The internet is down, stop Media.");
-            [self stopMedia];
-            
-            break;
-        }
+    NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
+    
+    if(remoteHostStatus == NotReachable) {
+        [self noNetworkAvailable];
+    }else{
+        NSLog(@"network is available now");
+        [MBProgressHUD hideHUDForView:self.webView animated:YES];
     }
 }
 
@@ -126,11 +132,12 @@ AudioUnit samplerUnit;
     [audioSession setCategory: AVAudioSessionCategoryPlayback error: &audioSessionError];
     if (audioSessionError != nil) {NSLog (@"Error setting audio session category."); return NO;}    
     
-        
-      // Activate the audio session
+    
+    // Activate the audio session
     [audioSession setActive: YES error: &audioSessionError];
     if (audioSessionError != nil) {NSLog (@"Error activating the audio session."); return NO;}
     
+    NSLog(@"audioSessionActivated");
     return YES;
 }
 
@@ -155,7 +162,7 @@ AudioUnit samplerUnit;
         
         NSLog (@"Temp Dir removed: %@", isRemoved ? @"YES" : @"NO");
     }
-
+    
 }
 
 - (void)viewDidUnload
@@ -201,10 +208,10 @@ AudioUnit samplerUnit;
     NewMusicSequence(&mySequence);
     NSURL * midiFileURL = [NSURL fileURLWithPath:midPath];
     MusicSequenceFileLoad(mySequence, (__bridge CFURLRef)midiFileURL, 0, kMusicSequenceLoadSMF_ChannelsToTracks);
-   
+    
     MusicSequenceSetAUGraph(mySequence, _processingGraph);
-
-
+    
+    
     //    MusicTimeStamp lengthInBeats = [self getSequenceLength:mySequence];
     //    NSLog(@"sequence beats is %d", (int)lengthInBeats);
     //    
@@ -225,6 +232,13 @@ AudioUnit samplerUnit;
     MusicPlayerSetSequence(player, mySequence);
     MusicPlayerPreroll(player);
     MusicPlayerStart(player);
+    
+    [self invalidateTimer];
+    oneHourTimer = [NSTimer scheduledTimerWithTimeInterval:60*60
+                                                    target:self
+                                                  selector:@selector(handleOneHourTimer)
+                                                  userInfo:nil
+                                                   repeats:NO];
     
 }
 
@@ -281,8 +295,8 @@ AudioUnit samplerUnit;
     
     result = DisposeMusicPlayer(player);
     result = DisposeMusicSequence(mySequence);
-//    result = DisposeAUGraph(_processingGraph);
-
+    //    result = DisposeAUGraph(_processingGraph);
+    
     NSLog(@"Stopping media, status is %@", result);
 }
 
@@ -294,7 +308,7 @@ AudioUnit samplerUnit;
     NSString *midUrl = [webView stringByEvaluatingJavaScriptFromString:strjs];
     
     //remove mask
-[MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideHUDForView:self.webView animated:YES];
     NSLog(@"mid Url is %@", midUrl);
     
     if(!midUrl || [midUrl length]==0){
@@ -317,14 +331,18 @@ AudioUnit samplerUnit;
         [self playMedia:midPath];
     }
     
-  
+    
 }
 
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSLog(@"Loading %@", [request URL]);
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self invalidateTimer];
     [self stopMedia];
+    //add load mask
+    [MBProgressHUD hideAllHUDsForView:self.webView animated:TRUE];
+    [MBProgressHUD showHUDAddedTo:self.webView animated:YES];
+    
     return YES;
 }
 
@@ -351,7 +369,7 @@ AudioUnit samplerUnit;
                                   &bpdata,
                                   sizeof(bpdata));
     
-
+    
     
     // check for errors
     NSCAssert (result == noErr,
@@ -415,7 +433,39 @@ AudioUnit samplerUnit;
 	result = AUGraphNodeInfo (self.processingGraph, ioNode, 0, &_ioUnit);
     NSCAssert (result == noErr, @"Unable to obtain a reference to the I/O unit. Error code: %d '%.4s'", (int) result, (const char *)&result);
     
+    //see http://developer.apple.com/library/ios/#documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Cookbook/Cookbook.html
+    UInt32 maximumFramesPerSlice = 4096;
+    
+    AudioUnitSetProperty (
+                          self.samplerUnit,
+                          kAudioUnitProperty_MaximumFramesPerSlice,
+                          kAudioUnitScope_Global,
+                          0,                        // global scope always uses element 0
+                          &maximumFramesPerSlice,
+                          sizeof (maximumFramesPerSlice)
+                          );
+    
     return YES;
 }
-
+- (void) postInitGragh{
+    OSStatus result = noErr;
+    if (self.processingGraph) {
+        
+        // Initialize the audio processing graph.
+        result = AUGraphInitialize (self.processingGraph);
+        NSAssert (result == noErr, @"Unable to initialze AUGraph object. Error code: %d '%.4s'", (int) result, (const char *)&result);
+    }
+    // Load the ound font from file
+    NSURL *presetURL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:
+                                                           //@"gorts_mini_piano" ofType:@"sf2"]];
+                                                           
+                                                           //@"u20" ofType:@"sf2"]];
+                                                           @"piano" ofType:@"sf2"]];
+    
+    
+    
+    // Initialise the sound font
+    //#12 #13
+    [self loadFromDLSOrSoundFont: (NSURL *)presetURL withPatch: (int)1];
+}
 @end
