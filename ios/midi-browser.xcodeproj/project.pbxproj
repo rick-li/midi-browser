@@ -27,8 +27,6 @@
 		7EC22FA4161033D700D55D41 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EC22FA2161033D700D55D41 /* MainStoryboard.storyboard */; };
 		7EC22FA7161033D700D55D41 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC22FA6161033D700D55D41 /* ViewController.m */; };
 		7EC22FB61611A5CC00D55D41 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC22FB51611A5CC00D55D41 /* AudioToolbox.framework */; };
-		7EC22FDE16133C4D00D55D41 /* gorts.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7EC22FDD16133C4D00D55D41 /* gorts.sf2 */; };
-		7EC22FE016133F7300D55D41 /* gorts_mini_piano.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7EC22FDF16133F7300D55D41 /* gorts_mini_piano.sf2 */; };
 		7EC22FE616135C7000D55D41 /* u20.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 7EC22FE516135C7000D55D41 /* u20.sf2 */; };
 		7ECA14D41615572C008AABA7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECA14D31615572C008AABA7 /* AVFoundation.framework */; };
 		7ECA14D716155750008AABA7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECA14D616155750008AABA7 /* CoreAudio.framework */; };
@@ -62,8 +60,6 @@
 		7EC22FA5161033D700D55D41 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7EC22FA6161033D700D55D41 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7EC22FB51611A5CC00D55D41 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		7EC22FDD16133C4D00D55D41 /* gorts.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = gorts.sf2; path = Resources/gorts.sf2; sourceTree = "<group>"; };
-		7EC22FDF16133F7300D55D41 /* gorts_mini_piano.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = gorts_mini_piano.sf2; path = Resources/gorts_mini_piano.sf2; sourceTree = "<group>"; };
 		7EC22FE516135C7000D55D41 /* u20.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; name = u20.sf2; path = Resources/u20.sf2; sourceTree = "<group>"; };
 		7ECA14D31615572C008AABA7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7ECA14D616155750008AABA7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -90,7 +86,6 @@
 		7EC22F81161033D700D55D41 = {
 			isa = PBXGroup;
 			children = (
-				7ECA14D616155750008AABA7 /* CoreAudio.framework */,
 				7EC22FDA1613395100D55D41 /* Resources */,
 				7EC22F96161033D700D55D41 /* midi-browser */,
 				7EC22F8F161033D700D55D41 /* Frameworks */,
@@ -109,6 +104,7 @@
 		7EC22F8F161033D700D55D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7ECA14D616155750008AABA7 /* CoreAudio.framework */,
 				7ECA14D31615572C008AABA7 /* AVFoundation.framework */,
 				7E5EAB291614599600787E0A /* SystemConfiguration.framework */,
 				7EC22FB51611A5CC00D55D41 /* AudioToolbox.framework */,
@@ -160,8 +156,6 @@
 				7EC22FE516135C7000D55D41 /* u20.sf2 */,
 				7E5EAB12161435B300787E0A /* back@2x.png */,
 				7E5EAB13161435B300787E0A /* forw@2x.png */,
-				7EC22FDF16133F7300D55D41 /* gorts_mini_piano.sf2 */,
-				7EC22FDD16133C4D00D55D41 /* gorts.sf2 */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -193,7 +187,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
-				ORGANIZATIONNAME = citi;
+				ORGANIZATIONNAME = duosuccess;
 			};
 			buildConfigurationList = 7EC22F86161033D700D55D41 /* Build configuration list for PBXProject "midi-browser" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -219,8 +213,6 @@
 			files = (
 				7EC22F9B161033D700D55D41 /* InfoPlist.strings in Resources */,
 				7EC22FA4161033D700D55D41 /* MainStoryboard.storyboard in Resources */,
-				7EC22FDE16133C4D00D55D41 /* gorts.sf2 in Resources */,
-				7EC22FE016133F7300D55D41 /* gorts_mini_piano.sf2 in Resources */,
 				7EC22FE616135C7000D55D41 /* u20.sf2 in Resources */,
 				7E5EAB14161435B300787E0A /* back@2x.png in Resources */,
 				7E5EAB15161435B300787E0A /* forw@2x.png in Resources */,
