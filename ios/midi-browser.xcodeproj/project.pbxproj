@@ -20,13 +20,10 @@
 		7E810E1616183A9200C3BF23 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E0B16183A9100C3BF23 /* iTunesArtwork.png */; };
 		7E810E1716183A9200C3BF23 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E0C16183A9100C3BF23 /* iTunesArtwork@2x.png */; };
 		7E810E1816183A9200C3BF23 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E0D16183A9100C3BF23 /* launch.png */; };
-		7E810E3116183B6D00C3BF23 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E2916183B6D00C3BF23 /* icon-72.png */; };
-		7E810E3216183B6D00C3BF23 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E2A16183B6D00C3BF23 /* icon-72@2x.png */; };
 		7E810E3316183B6D00C3BF23 /* icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E2B16183B6D00C3BF23 /* icon-Small-50.png */; };
 		7E810E3416183B6D00C3BF23 /* icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E2C16183B6D00C3BF23 /* icon-Small-50@2x.png */; };
 		7E810E3516183B6D00C3BF23 /* icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E2D16183B6D00C3BF23 /* icon-Small.png */; };
 		7E810E3616183B6D00C3BF23 /* icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E2E16183B6D00C3BF23 /* icon-Small@2x.png */; };
-		7E810E3816183B6D00C3BF23 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E3016183B6D00C3BF23 /* icon@2x.png */; };
 		7E810E3A16183B8500C3BF23 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E3916183B8500C3BF23 /* icon.png */; };
 		7E810E3C16183B9E00C3BF23 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E3B16183B9E00C3BF23 /* Default.png */; };
 		7E810E3D16183BFC00C3BF23 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E810E2F16183B6D00C3BF23 /* icon.png */; };
@@ -67,14 +64,11 @@
 		7E810E0B16183A9100C3BF23 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesArtwork.png; path = Resources/iTunesArtwork.png; sourceTree = "<group>"; };
 		7E810E0C16183A9100C3BF23 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "Resources/iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		7E810E0D16183A9100C3BF23 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = launch.png; path = Resources/launch.png; sourceTree = "<group>"; };
-		7E810E2916183B6D00C3BF23 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72.png"; path = "Resources/icon-72.png"; sourceTree = "<group>"; };
-		7E810E2A16183B6D00C3BF23 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72@2x.png"; path = "Resources/icon-72@2x.png"; sourceTree = "<group>"; };
 		7E810E2B16183B6D00C3BF23 /* icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-Small-50.png"; path = "Resources/icon-Small-50.png"; sourceTree = "<group>"; };
 		7E810E2C16183B6D00C3BF23 /* icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-Small-50@2x.png"; path = "Resources/icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		7E810E2D16183B6D00C3BF23 /* icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-Small.png"; path = "Resources/icon-Small.png"; sourceTree = "<group>"; };
 		7E810E2E16183B6D00C3BF23 /* icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-Small@2x.png"; path = "Resources/icon-Small@2x.png"; sourceTree = "<group>"; };
 		7E810E2F16183B6D00C3BF23 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/icon.png; sourceTree = "<group>"; };
-		7E810E3016183B6D00C3BF23 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Resources/icon@2x.png"; sourceTree = "<group>"; };
 		7E810E3916183B8500C3BF23 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		7E810E3B16183B9E00C3BF23 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		7E810E3E16183C2500C3BF23 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
@@ -205,14 +199,11 @@
 		7EC22FDA1613395100D55D41 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7E810E2916183B6D00C3BF23 /* icon-72.png */,
-				7E810E2A16183B6D00C3BF23 /* icon-72@2x.png */,
 				7E810E2B16183B6D00C3BF23 /* icon-Small-50.png */,
 				7E810E2C16183B6D00C3BF23 /* icon-Small-50@2x.png */,
 				7E810E2D16183B6D00C3BF23 /* icon-Small.png */,
 				7E810E2E16183B6D00C3BF23 /* icon-Small@2x.png */,
 				7E810E2F16183B6D00C3BF23 /* icon.png */,
-				7E810E3016183B6D00C3BF23 /* icon@2x.png */,
 				7E810E0B16183A9100C3BF23 /* iTunesArtwork.png */,
 				7E810E0C16183A9100C3BF23 /* iTunesArtwork@2x.png */,
 				7E810E0D16183A9100C3BF23 /* launch.png */,
@@ -288,13 +279,10 @@
 				7E810E1616183A9200C3BF23 /* iTunesArtwork.png in Resources */,
 				7E810E1716183A9200C3BF23 /* iTunesArtwork@2x.png in Resources */,
 				7E810E1816183A9200C3BF23 /* launch.png in Resources */,
-				7E810E3116183B6D00C3BF23 /* icon-72.png in Resources */,
-				7E810E3216183B6D00C3BF23 /* icon-72@2x.png in Resources */,
 				7E810E3316183B6D00C3BF23 /* icon-Small-50.png in Resources */,
 				7E810E3416183B6D00C3BF23 /* icon-Small-50@2x.png in Resources */,
 				7E810E3516183B6D00C3BF23 /* icon-Small.png in Resources */,
 				7E810E3616183B6D00C3BF23 /* icon-Small@2x.png in Resources */,
-				7E810E3816183B6D00C3BF23 /* icon@2x.png in Resources */,
 				7E810E3A16183B8500C3BF23 /* icon.png in Resources */,
 				7E810E3C16183B9E00C3BF23 /* Default.png in Resources */,
 				7E810E3D16183BFC00C3BF23 /* icon.png in Resources */,
@@ -396,15 +384,15 @@
 		7EC22FAB161033D700D55D41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test/midi-browser-Prefix.pch";
 				INFOPLIST_FILE = "test/midi-browser-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "midi-browser";
-				PROVISIONING_PROFILE = "54D30A58-DFE4-4CFC-B045-C3A8AF8B7144";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "54D30A58-DFE4-4CFC-B045-C3A8AF8B7144";
+				PROVISIONING_PROFILE = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -414,15 +402,15 @@
 		7EC22FAC161033D700D55D41 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test/midi-browser-Prefix.pch";
 				INFOPLIST_FILE = "test/midi-browser-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "midi-browser";
-				PROVISIONING_PROFILE = "54D30A58-DFE4-4CFC-B045-C3A8AF8B7144";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "54D30A58-DFE4-4CFC-B045-C3A8AF8B7144";
+				PROVISIONING_PROFILE = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
