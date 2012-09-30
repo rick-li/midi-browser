@@ -27,9 +27,19 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-//    ViewController *v = (ViewController*) self.window.rootViewController;
-//    [v stopMedia];
+    NSLog(@"begin background task");
+    UIBackgroundTaskIdentifier bgTask = nil;
+    UIApplication  *app = [UIApplication sharedApplication];
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{ 
+        [app endBackgroundTask:(bgTask)]; 
+        //bgTask = UIBackgroundTaskInvalid;
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{});
+    
+    [app endBackgroundTask:bgTask]; bgTask = UIBackgroundTaskInvalid;
 }
+
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {

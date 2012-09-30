@@ -34,10 +34,11 @@
 @synthesize ioUnit              = _ioUnit;
 
 
-//NSString *url=@"http://duosuccess.com/tcm/001a01080301b01aj.htm";
+//NSString *homeUrl=@"http://duosuccess.com/tcm/001a01080301b01aj.htm";
 NSString *homeUrl = @"http://www.duosuccess.com";
 //NSString *homeUrl = @"http://rick-li.github.com/android-midi/test2.html";
 //NSString *homeUrl = @"http://10.114.191.51/midi/test2.html";
+//NSString *homeUrl = @"http://li-ricks-macbook.local/~lirick/test.html";
 
 NSString *tmpDir;
 NSTimer *oneHourTimer;
@@ -62,25 +63,18 @@ AudioUnit samplerUnit;
     
     [self clearCache];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
     
     
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kReachabilityChangedNotification object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
     
+ //   internetReachable = [Reachability reachabilityForInternetConnection];
+ //   [internetReachable startNotifier];
     
-  //  [[NSNotificationCenter defaultCenter] postNotificationName:kReachabilityChangedNotification object:nil];
+    NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
     
-    internetReachable = [Reachability reachabilityForInternetConnection];
-    [internetReachable startNotifier];
-    
-//    NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
-//    
-//    if(remoteHostStatus == NotReachable) {
-//        [self noNetworkAvailable];
-//        
-//    }
+    if(remoteHostStatus == NotReachable) {
+        [self noNetworkAvailable];        
+    }
     
     [self loadHome];
     
@@ -247,7 +241,7 @@ AudioUnit samplerUnit;
     
     
     if (MusicSequenceGetTrackCount(sequence, &tracks) != noErr)
-        
+        NSLog(@"track size is %d", (int)tracks);
         
         for (UInt32 i = 0; i < tracks; i++) {
             MusicTrack track = NULL;
