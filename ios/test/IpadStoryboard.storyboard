@@ -48,7 +48,7 @@
                     </view>
                     <connections>
                         <outlet property="backBtn" destination="7GM-Qd-jfo" id="CcC-5D-JHW"/>
-                        <outlet property="homeBtn" destination="xcH-J5-COo" id="zIR-hI-H4o"/>
+                        <outlet property="homeBtn" destination="zv2-Ac-MKO" id="u11-ne-s10"/>
                         <outlet property="refreshBtn" destination="uDt-Rw-WLw" id="WHY-JC-cbE"/>
                         <outlet property="webView" destination="KYf-Yg-dw9" id="mNz-dV-MQt"/>
                     </connections>
@@ -61,21 +61,6 @@
         <image name="back.png" width="15" height="18"/>
         <image name="home2.png" width="36" height="36"/>
     </resources>
-    <classes>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backAction:"/>
-                <relationship kind="action" name="homeAction:"/>
-                <relationship kind="action" name="refreshAction:"/>
-                <relationship kind="outlet" name="backBtn" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="closeBtn" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="homeBtn" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="refreshBtn" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

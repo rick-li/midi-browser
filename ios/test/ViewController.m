@@ -35,13 +35,15 @@
 
 
 //NSString *homeUrl=@"http://duosuccess.com/tcm/001a01080301b01aj.htm";
-NSString *homeUrl = @"http://www.duosuccess.com";
+NSString *homeUrl = @"http://www.duosuccess.com/";
 //NSString *homeUrl = @"http://rick-li.github.com/android-midi/test2.html";
 //NSString *homeUrl = @"http://10.114.191.51/midi/test2.html";
 //NSString *homeUrl = @"http://li-ricks-macbook.local/~lirick/test.html";
 
 NSString *tmpDir;
 NSTimer *oneHourTimer;
+
+NSTimer *pageLoadTimer;
 
 AUGraph _processingGraph;
 AudioUnit samplerUnit;
@@ -67,11 +69,11 @@ AudioUnit samplerUnit;
     
     
     
- //   internetReachable = [Reachability reachabilityForInternetConnection];
- //   [internetReachable startNotifier];
+   internetReachable = [Reachability reachabilityForInternetConnection];
+//   [internetReachable startNotifier];
     
     NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
-    
+//    
     if(remoteHostStatus == NotReachable) {
         [self noNetworkAvailable];        
     }
@@ -167,6 +169,7 @@ AudioUnit samplerUnit;
     [self setHomeBtn:nil];
     [self setBackBtn:nil];
     [self setCloseBtn:nil];
+    [self setHomeBtn:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -297,6 +300,18 @@ AudioUnit samplerUnit;
 
 - (void) webViewDidFinishLoad:(UIWebView *)webView{
     NSLog(@"webview load finished");
+    NSString *currentURL = self.webView.request.URL.absoluteString;
+    NSLog(@"Current url is %@", currentURL);
+    
+    
+    if([currentURL isEqualToString: homeUrl]){
+        [backBtn setEnabled:FALSE];
+    }else{
+        [backBtn setEnabled:TRUE];        
+    }
+    
+    [pageLoadTimer invalidate];
+    
     //    NSString *strjs = @"document.queryBySelector('embed').src";
     NSString *strjs = @"document.querySelector('embed').src";
     NSString *midUrl = [webView stringByEvaluatingJavaScriptFromString:strjs];
@@ -335,11 +350,32 @@ AudioUnit samplerUnit;
     [self stopMedia];
     //add load mask
     [MBProgressHUD hideAllHUDsForView:self.webView animated:TRUE];
-    [MBProgressHUD showHUDAddedTo:self.webView animated:YES];
+    MBProgressHUD* progress_;
     
+    progress_ = [[MBProgressHUD alloc] initWithView:self.webView];  
+    [self.webView addSubview:progress_];
+    [self.webView bringSubviewToFront:progress_];
+    progress_.delegate = self;  
+    progress_.labelText = @"加载中...";  
+    [progress_ show:YES]; 
+    
+    pageLoadTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(cancelWeb) userInfo:nil repeats:NO];
     return YES;
 }
 
+-(void) cancelWeb{
+    //remove mask
+    [MBProgressHUD hideHUDForView:self.webView animated:YES];
+    [webView stopLoading];
+    
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"加载超时"
+                                                      message:@"请检查网络连接并刷新页面"
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
+
+}
 
 
 -(OSStatus) loadFromDLSOrSoundFont: (NSURL *)bankURL withPatch: (int)presetNumber {

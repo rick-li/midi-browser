@@ -15,7 +15,8 @@
 {
     Reachability* internetReachable;
 }
-@property (weak, nonatomic) IBOutlet UIToolbar *homeBtn;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *homeBtn;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshBtn;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backBtn;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
