@@ -6,6 +6,7 @@ import gr.fire.core.CommandListener;
 import gr.fire.core.Component;
 import gr.fire.core.FireScreen;
 import gr.fire.core.Panel;
+import gr.fire.ui.Alert;
 import gr.fire.ui.FireTheme;
 import gr.fire.util.Log;
 
@@ -66,17 +67,8 @@ public class MidiBrowser extends MIDlet implements CommandListener {
 		// initialize a browser instance
 		b = new Browser();
 
-		try {
+		loadPage(landingPage);
 
-			loadPage(landingPage);
-		} catch (Exception e) {
-			// Use the Log class of the fire utility classes to easily log
-			// errors.
-			// Check the BrowserTest.java application and the javadoc for more
-			// info on
-			// the Log class and the Logger interface.
-			Log.logError("Failed to load Browser.", e);
-		}
 
 	}
 
@@ -126,6 +118,10 @@ public class MidiBrowser extends MIDlet implements CommandListener {
 			// panel
 			screen.setCurrent(containerPanel); // show the panel on the screen.
 		} catch (Exception e) {
+			FireScreen.getScreen().showAlert("页面加载失败，请检查网络是否打开。",
+					Alert.TYPE_ERROR, Alert.USER_SELECTED_OK,
+					new Command("退出",
+							Command.EXIT, 1), this);
 			Log.logError("Failed to load Browser.", e);
 		}
 	}

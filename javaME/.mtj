@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mtjMetadata jad="midi-browser.jad" version="1.2.1.201101310801">
-   <device group="Oracle Java(TM) Platform Micro Edition SDK 3.2" name="ClamshellJavaMEPhone1"/>
+   <device group="Oracle Java(TM) Platform Micro Edition SDK 3.2" name="JavaMEPhone1"/>
    <signing projectSpecific="false" signProject="false">
       <alias/>
    </signing>
@@ -8,8 +8,8 @@
       <configuration active="true" name="ClamshellJavaMEPhone1">
          <device group="Oracle Java(TM) Platform Micro Edition SDK 3.2" name="JavaMEPhone1"/>
          <symbolSet name="JavaMEPhone1">
-            <symbol name="MMAPI" value="1.2"/>
             <symbol name="screen.isColor" value="true"/>
+            <symbol name="MMAPI" value="1.2"/>
             <symbol name="descriptor" value="Java ME CLDC emulator"/>
             <symbol name="screen.bitDepth" value="16"/>
             <symbol name="JSR82" value="1.1"/>
