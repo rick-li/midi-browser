@@ -117,13 +117,37 @@ h1 {
 		}
 		map = new google.maps.Map(
 				document.getElementById("map_canvas"), mapOptions);
-		var marker = new google.maps.Marker({
-			position : latlng,
-			map : map,
-			title : '您的位置'
-		});
-
-		showLocation();
+		
+		geocoder = new google.maps.Geocoder();
+		geocoder.geocode({'latLng': latlng}, function(results, status) {
+			  if (status == google.maps.GeocoderStatus.OK) {
+			    if (results[1]) {
+			      map.setZoom(14);
+			      marker = new google.maps.Marker({
+			          position: latlng, 
+			          map: map
+			      }); 
+			      var addr = results[1].formatted_address;
+			      //infowindow.open(map, marker);
+			      var marker = new google.maps.Marker({
+						position : latlng,
+						map : map,
+						title : addr
+					});
+			      var infowindow = new google.maps.InfoWindow({
+			          content: '<span style="color: black">'+addr+'</span>'
+			      });
+			      infowindow.open(map, marker);
+			      
+			      document.getElementById('address').innerHTML = addr;
+			    } else {
+			      alert("No results found");
+			    }
+			  } else {
+			    alert("Geocoder failed due to: " + status);
+			  }
+			});
+		
 		showClock();
 		
 	}
@@ -144,29 +168,7 @@ h1 {
 		}
 	}
 
-	function addAddressToMap(results, status) {
-		map.clearOverlays();
-		if (status.code != google.maps.GeocoderStatus.OK) {
-			alert("Sorry, we were unable to geocode that address");
-		} else {
 
-			map.setCenter(results[0].geometry.location);
-			var marker = new google.maps.Marker({
-				map : map,
-				position : results[0].geometry.location
-			});
-			var addr = document.getElementById('address');
-			addr.firstChild.data = place.address;
-		}
-	}
-
-	function showLocation() {
-
-		var address = window.geoPos.coords.latitude + ","
-				+ window.geoPos.coords.longitude;
-		document.getElementById('address').innerHTML = address;
-
-	}
 	
 	function detectBrowser() {
 		  var useragent = navigator.userAgent;
@@ -192,15 +194,16 @@ h1 {
 		<h1>
 			<span id="currentTime">00:00:00</span>
 		</h1>
-	  <form action="#" onsubmit="initPosition({'coords':{'latitude':document.forms[0].lati.value,'longitude':document.forms[0].longi.value}}); return false;">
-      <p id='manualInputForm' style="display:none;">
-        <b>自动定位失败, 请手动输入位置:</b>
-        <b>经度</b><input type="text" name="lati" value="" class="address_input" size="10" />
-        <b>纬度</b><input type="text" name="longi" value="" class="address_input" size="10" />
-        <input type="submit" name="find" value="确定" />
+		<form action="#"
+			onsubmit="initPosition({'coords':{'latitude':document.forms[0].lati.value,'longitude':document.forms[0].longi.value}}); return false;">
+			<p id='manualInputForm' style="display: none;">
+				<b>自动定位失败, 请手动输入位置:</b> <b>经度</b><input type="text" name="lati"
+					value="" class="address_input" size="10" /> <b>纬度</b><input
+					type="text" name="longi" value="" class="address_input" size="10" />
+				<input type="submit" name="find" value="确定" />
 
-      </p>
-    </form>
+			</p>
+		</form>
 		<div id="map_canvas" style="width: 500px; height: 300px"></div>
 
 		您的位置: <span id="address">未知</span>.
