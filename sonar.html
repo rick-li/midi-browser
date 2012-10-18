@@ -141,10 +141,15 @@ h1 {
 			      
 			      document.getElementById('address').innerHTML = addr;
 			    } else {
-			      alert("No results found");
+			    	if(typeof(console)!=undefined && console && console.log){
+						console.log('Not found.');	  
+					  }
 			    }
 			  } else {
-			    alert("Geocoder failed due to: " + status);
+				  if(typeof(console)!=undefined && console && console.log){
+					console.log('Not found.');	  
+				  }
+			    
 			  }
 			});
 		
