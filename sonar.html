@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+
+
+<html>
+<meta charset='utf-8' />
+
+<head>
+
+<title>真太阳时</title>
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false
+    &amp;key=ABQIAAAA8JXb0YDVa4otOLnM95w50BSeC_rwpfX9fQb-nbMGMDH8BB4BVRTjxWS14T5WLZf7TpXaaAtk_SIb-Q"
+    type="text/javascript">
+  </script>
+
+
+<style type="text/css">
+
+body {
+    font: Helvetica, arial, freesans, clean, sans-serif 13px;
+    background-color: #245aa6;
+}
+
+#main {
+	background-color: #245aa6;
+	color: #fff;
+	}
+	
+#description {
+	width: 400px;
+	text-align: left;
+	}
+	
+a {
+	color: yellow;
+	text-decoration: none;
+}
+
+h1 {
+text-align:center;
+}
+
+</style>
+
+<script type="text/javascript">
+function displayTime(){
+    if(window.geoPos){
+        var offset = geoPos.coords.longitude * 4 * 60 * 1000;
+        var realTime = new Date(new Date(new Date().toGMTString().substring(0, new Date().toGMTString().lastIndexOf(" ")+1)).getTime()+offset-15*60*1000);
+        var mon = realTime.getMonth();
+        mon = mon<10?'0'+mon:mon;
+        var d = realTime.getDay();
+        d = d<10?'0'+d:d;
+        var h = realTime.getHours();
+        h = h<10?'0'+h:h;
+        var m = realTime.getMinutes();
+        m = m<10?'0'+m:m;
+        var s = realTime.getSeconds();
+        s = s<10?'0'+s:s;
+        document.getElementById('currentTime').innerHTML = realTime.getFullYear()+'-'+mon+'-'+d+' '+h+':'+m+':'+s
+    }else{
+        
+    }
+}
+function showClock(){
+    displayTime();
+    setTimeout(function(){
+        showClock();
+    }, 1000);
+
+}
+
+    var map;
+    var geocoder;
+
+    function initialize() {
+      map = new GMap2(document.getElementById("map_canvas"));
+      map.setCenter(new GLatLng(34, 0), 1);
+      geocoder = new GClientGeocoder();
+      if (navigator.geolocation) {
+  
+   navigator.geolocation.getCurrentPosition(function(position) {
+   window.geoPos = position;
+   s = position.coords.latitude+","+position.coords.longitude;
+	//document.forms[0].q.value = s;
+	showLocation();
+    showClock();
+    
+ }); 
+  
+} else {
+  alert("您的浏览器不支持定位功能。");
+}
+    }
+
+    function addAddressToMap(response) {
+      map.clearOverlays();
+      if (!response || response.Status.code != 200) {
+        alert("Sorry, we were unable to geocode that address");
+      } else {
+        place = response.Placemark[0];
+        point = new GLatLng(place.Point.coordinates[1],
+                            place.Point.coordinates[0]);
+        marker = new GMarker(point);
+        map.setCenter(point, 13);
+        map.addOverlay(marker);
+		var addr = document.getElementById('address');
+		addr.firstChild.data = place.address;
+      }
+    }
+
+    function showLocation() {
+      
+      var address = window.geoPos.coords.latitude+","+window.geoPos.coords.longitude;
+      document.getElementById('address').innerHTML = address;
+      geocoder.getLocations(address, addAddressToMap);
+    }
+
+    function findLocation(address) {
+      //document.forms[0].q.value = address;
+      
+      showLocation();
+    }
+
+</script>
+
+
+</head>
+
+<body onload="initialize()">
+
+<div id="main" align="center">
+<h1>您当前位置的真太阳时</h1>
+
+    <h1> <span id="currentTime">00:00:00</span></h1>
+    <!--<form action="#" onsubmit="showLocation(); return false;">
+      <p>
+        <b>Search for an address:</b>
+        <input type="text" name="q" value="" class="address_input" size="40" />
+        
+        <input type="submit" name="find" value="Search" />
+
+      </p>
+    </form>-->
+    <div id="map_canvas" style="width: 500px; height: 300px"></div>
+
+您的地址: <span id="address">Unknown</span>.
+	
+</div>
+</body>
+
+</html>
