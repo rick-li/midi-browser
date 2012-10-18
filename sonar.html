@@ -37,11 +37,14 @@ h1 {
 	function getRealOffset(){
 		var today = new Date();
 		var mon = today.getMonth();
-		mon = mon<10?'0'+mon:mon;
-		var d = today.getDay();
+		mon++;
+		mon = mon+1<10?'0'+mon:mon;
+		var d = today.getDate();
 		d = d < 10 ? '0' + d : d;
 		var key = mon+'/'+d;
+		//console.log('real offset key is '+key);
 		var val = realSonarOffsetMap[key];//+15'22"
+		
 		//console.log('real offset value is '+val);
 		if(!val){
 			return -15 * 60 * 1000;//default to 15 mins.			
@@ -68,8 +71,9 @@ h1 {
 					.getTime()
 					+ latiOffset + realOffset);
 			var mon = realTime.getMonth();
+			mon++;
 			mon = mon < 10 ? '0' + mon : mon;
-			var d = realTime.getDay();
+			var d = realTime.getDate();
 			d = d < 10 ? '0' + d : d;
 			var h = realTime.getHours();
 			h = h < 10 ? '0' + h : h;
