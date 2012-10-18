@@ -8,11 +8,13 @@
 
 <title>真太阳时</title>
 
+<!--
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false
     &amp;key=ABQIAAAA8JXb0YDVa4otOLnM95w50BSeC_rwpfX9fQb-nbMGMDH8BB4BVRTjxWS14T5WLZf7TpXaaAtk_SIb-Q"
     type="text/javascript">
   </script>
-
+-->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
 <style type="text/css">
 
@@ -74,36 +76,57 @@ function showClock(){
     var geocoder;
 
     function initialize() {
-      map = new GMap2(document.getElementById("map_canvas"));
-      map.setCenter(new GLatLng(34, 0), 1);
-      geocoder = new GClientGeocoder();
+    
       if (navigator.geolocation) {
   
    navigator.geolocation.getCurrentPosition(function(position) {
    window.geoPos = position;
    s = position.coords.latitude+","+position.coords.longitude;
+   
+      var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var mapOptions = {
+      zoom: 14,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+      map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+      var marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+            title: '您的位置'
+        });
+      
 	//document.forms[0].q.value = s;
 	showLocation();
     showClock();
     
- }); 
+ }
+ 
+ ); 
   
 } else {
   alert("您的浏览器不支持定位功能。");
 }
     }
 
-    function addAddressToMap(response) {
+    function addAddressToMap(results, status) {
       map.clearOverlays();
-      if (!response || response.Status.code != 200) {
+      if (status.code != google.maps.GeocoderStatus.OK) {
         alert("Sorry, we were unable to geocode that address");
       } else {
+        /*
         place = response.Placemark[0];
         point = new GLatLng(place.Point.coordinates[1],
                             place.Point.coordinates[0]);
         marker = new GMarker(point);
         map.setCenter(point, 13);
         map.addOverlay(marker);
+        */
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
 		var addr = document.getElementById('address');
 		addr.firstChild.data = place.address;
       }
@@ -113,7 +136,7 @@ function showClock(){
       
       var address = window.geoPos.coords.latitude+","+window.geoPos.coords.longitude;
       document.getElementById('address').innerHTML = address;
-      geocoder.getLocations(address, addAddressToMap);
+      geocoder.geocode({'address':address}, addAddressToMap);
     }
 
     function findLocation(address) {
@@ -144,7 +167,7 @@ function showClock(){
     </form>-->
     <div id="map_canvas" style="width: 500px; height: 300px"></div>
 
-您的地址: <span id="address">Unknown</span>.
+您的位置: <span id="address">未知</span>.
 	
 </div>
 </body>
