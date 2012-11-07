@@ -28,9 +28,6 @@ public class MidiBrowser extends MIDlet implements CommandListener {
 
 	public static final String landingPage = "http://www.duosuccess.com";
 
-	// String landingPage =
-	// "http://www.duosuccess.com/tcm/001a01080301b01aj.htm";
-
 	public MidiBrowser() {
 		// TODO Auto-generated constructor stub
 	}
@@ -66,7 +63,7 @@ public class MidiBrowser extends MIDlet implements CommandListener {
 		}
 		// initialize a browser instance
 		b = new Browser();
-
+		b.setImageLoadingPolicy(Browser.NO_IMAGES);
 		loadPage(landingPage);
 
 

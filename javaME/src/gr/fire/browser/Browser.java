@@ -89,8 +89,7 @@ import org.kxml2.io.KXmlParser;
  * @author padeler
  */
 public class Browser implements CommandListener, PageListener, ResponseHandler {
-	public static String DUO_MID_FILE = System
-			.getProperty("fileconn.dir.memorycard") + "duosuccess.mid";
+
 	/**
 	 * Flag for the imageLoadingPolicy field. No images are loaded.
 	 */
@@ -625,25 +624,7 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 						System.out.println("Status Line Message: "
 								+ connection.getResponseMessage());
 
-
-						DUO_MID_FILE = System.getProperty("fileconn.dir.music")
-								+ "duosuccess.mid";
 						if (connection.getResponseCode() == HttpConnection.HTTP_OK) {
-							// System.out.println("Trying to open file "+DUO_MID_FILE);
-							// FileConnection fc = (FileConnection) Connector
-							// .open(DUO_MID_FILE, Connector.READ_WRITE);
-							//
-							// System.out.println("File opened.");
-							// if (fc.exists()) {
-							// fc.delete();
-							// }
-							// fc.create();
-							// os = fc.openOutputStream();
-							// int d = 0;
-							// while ((d = inputstream.read()) != -1) {
-							// os.write(d);
-							// }
-							// os.flush();
 
 							try {
 								midiPlayer = Manager.createPlayer(inputstream,
@@ -667,8 +648,7 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 
 								}, 60 * 60 * 1000);
 							} catch (Exception e) {
-								Log.logError("Unable to play midi "
-										+ DUO_MID_FILE, e);
+								Log.logError("Unable to play midi.", e);
 							}
 						}
 					} catch (IOException error) {
@@ -700,7 +680,7 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 					}
 				}
 
-				// Log.logInfo("html is " + strHtml.trim());
+				
 
 			} catch (InterruptedIOException e) {
 				// the execution was canceled by a Browser.cancel() call.
@@ -1227,6 +1207,7 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 	}
 
 	public void refresh() {
+		this.cancel();
 		if (midiPlayer != null) {
 			try {
 				this.midiPlayer.stop();
