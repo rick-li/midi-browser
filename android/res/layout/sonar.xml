@@ -5,12 +5,12 @@
     android:layout_height="match_parent" >
 
     <com.markupartist.android.widget.ActionBar
-        android:id="@+id/actionbar"
+        android:id="@+id/sonarActionbar"
         style="@style/ActionBar"
-        app:title="@string/title" />
+        app:title="" />
 
     <WebView
-        android:id="@+id/webView"
+        android:id="@+id/sonarWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"

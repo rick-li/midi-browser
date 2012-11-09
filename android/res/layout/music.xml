@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.duo.midi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.markupartist.android.widget.ActionBar
+        android:id="@+id/actionbar"
+        style="@style/ActionBar"
+        android:layout_height="45dip"
+        android:layout_alignParentTop="true"
+        app:title="" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="wrap_content"
+        android:layout_above="@+id/bottombar"
+        android:layout_below="@id/actionbar"
+        android:layout_height="wrap_content"
+        />
+
+    <com.markupartist.android.widget.ActionBar
+        android:id="@+id/bottombar"
+        style="@style/ActionBar"
+        android:layout_height="45dip"
+        android:layout_alignParentBottom="true"
+        app:title="@string/stop" />
+
+
+</RelativeLayout>
