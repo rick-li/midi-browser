@@ -29,6 +29,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.duo.midi.alarm.WakefulIntentService;
+import com.duo.midi.music.MusicRepeatListener;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 import com.markupartist.android.widget.actionbar.R;
@@ -37,25 +39,24 @@ public class MusicFragment extends Fragment {
 	private static final String TAG = "midi-browser";
 	private static final String KEY_CONTENT = "MusicFragment:Content";
 
-	private static final String homeUrl = "http://www.duosuccess.com";
-	// private static final String homeUrl =
-	// "http://rick-li.github.com/android-midi/index.html";
+//	private static final String homeUrl = "http://www.duosuccess.com";
+	 private static final String homeUrl = "http://rick-li.github.com/android-midi/index.html";
 	// private static final String homeUrl = "http://www.baidu.com";
 	private String strBaseDir = Environment.getExternalStorageDirectory()
 			.getPath() + "/duosuccess";
 	private String tmpMidiFile = strBaseDir + "/tmpMid.mid";
 	private MediaPlayer mp = new MediaPlayer();
-	private WebView webView;
+	public static WebView webView;
 	private Timer musicTimer;
 	private Timer waitTimer;
 	private volatile boolean needRepeat = false;
 	private String mContent = "music";
 
-	private int waitInterval = 1 * 60 * 60 * 1000;
-	private int musicDuration = 1 * 60 * 60 * 1000;
+	//private int waitInterval = 1 * 60 * 60 * 1000 + 5 * 60 * 1000;
+//	private int musicDuration = 1 * 60 * 60 * 1000;
 	
 //	private int waitInterval = 10 * 1000;
-//	private int musicDuration = 10 * 1000;
+	private int musicDuration = 5 * 1000;
 	
 	enum STATE {
 		stop {
@@ -172,6 +173,7 @@ public class MusicFragment extends Fragment {
 				stopMedia();
 				clearCache();
 				MusicFragment.this.getActivity().finish();
+				return;
 			}
 
 		});
@@ -192,6 +194,7 @@ public class MusicFragment extends Fragment {
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				super.onPageStarted(view, url, favicon);
 				Log.i(TAG, "Page started " + url);
+				try{
 				pd = ProgressDialog.show(MusicFragment.this.getActivity(), "",
 						"«Î…‘∫Ó");
 				new Timer().schedule(new TimerTask(){
@@ -203,6 +206,7 @@ public class MusicFragment extends Fragment {
 					
 				}, 30*1000);
 				stopMedia();
+				}catch(Exception e){}
 			}
 
 			@Override
@@ -265,6 +269,7 @@ public class MusicFragment extends Fragment {
 					stream.close();
 					pd.dismiss();
 					playMusic(tmpMidFile);
+					
 				} catch (Exception e) {
 					Log.e(TAG, "unable to play midi. ", e);
 				}
@@ -276,7 +281,7 @@ public class MusicFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 	}
 
-	private void startWaitCountdown() {
+/*	private void startWaitCountdown() {
 		waitTimer = new Timer();
 		final TimeCounter timeCounter = new TimeCounter();
 		waitTimer.scheduleAtFixedRate(new TimerTask() {
@@ -298,7 +303,7 @@ public class MusicFragment extends Fragment {
 
 		}, 0, 1000);
 	}
-
+*/
 	private void playMusic(File tmpMidFile) throws Exception {
 		mp = new MediaPlayer();
 		mp.setDataSource(MusicFragment.this.getActivity(),
@@ -329,8 +334,11 @@ public class MusicFragment extends Fragment {
 								timeCounter.getStartMillSec())));
 				if (timeCounter.getStartMillSec() == musicDuration) {
 					mp.stop();
-					if (needRepeat) {
-						startWaitCountdown();
+					if (needRepeat && !alarmStarted) {
+						WakefulIntentService.scheduleAlarms(new MusicRepeatListener(),
+	                            getActivity(), false);
+						alarmStarted = true;
+						Log.i(TAG, "Start schedule alarms.");
 					} else {
 						webView.loadUrl(homeUrl);
 					}
@@ -342,7 +350,7 @@ public class MusicFragment extends Fragment {
 			}
 		}, 0, 1000);
 	}
-
+	private boolean alarmStarted = false;
 	private void setFooterText(final String text) {
 		handler.post(new Runnable() {
 
@@ -404,4 +412,22 @@ public class MusicFragment extends Fragment {
 		outState.putString(KEY_CONTENT, mContent);
 	}
 
+	public WebView getWebView() {
+		return webView;
+	}
+
+	public void setWebView(WebView webView) {
+		this.webView = webView;
+	}
+
+	public boolean isNeedRepeat() {
+		return needRepeat;
+	}
+
+	public void setNeedRepeat(boolean needRepeat) {
+		this.needRepeat = needRepeat;
+	}
+
+	
+	
 }

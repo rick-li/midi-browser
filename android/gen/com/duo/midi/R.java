@@ -305,56 +305,56 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpiUnderlinePageIndicatorStyle=0x7f010005;
     }
     public static final class bool {
-        public static final int default_circle_indicator_centered=0x7f060000;
-        public static final int default_circle_indicator_snap=0x7f060001;
-        public static final int default_line_indicator_centered=0x7f060002;
-        public static final int default_title_indicator_selected_bold=0x7f060003;
-        public static final int default_underline_indicator_fades=0x7f060004;
+        public static final int default_circle_indicator_centered=0x7f070000;
+        public static final int default_circle_indicator_snap=0x7f070001;
+        public static final int default_line_indicator_centered=0x7f070002;
+        public static final int default_title_indicator_selected_bold=0x7f070003;
+        public static final int default_underline_indicator_fades=0x7f070004;
     }
     public static final class color {
-        public static final int actionbar_background_end=0x7f050014;
-        public static final int actionbar_background_item_pressed_end=0x7f050016;
-        public static final int actionbar_background_item_pressed_start=0x7f050015;
-        public static final int actionbar_background_start=0x7f050013;
-        public static final int actionbar_separator=0x7f050011;
-        public static final int actionbar_title=0x7f050012;
-        public static final int default_circle_indicator_fill_color=0x7f050008;
-        public static final int default_circle_indicator_page_color=0x7f050009;
-        public static final int default_circle_indicator_stroke_color=0x7f05000a;
-        public static final int default_line_indicator_selected_color=0x7f05000b;
-        public static final int default_line_indicator_unselected_color=0x7f05000c;
-        public static final int default_title_indicator_footer_color=0x7f05000d;
-        public static final int default_title_indicator_selected_color=0x7f05000e;
-        public static final int default_title_indicator_text_color=0x7f05000f;
-        public static final int default_underline_indicator_selected_color=0x7f050010;
-        public static final int vpi__background_holo_dark=0x7f050000;
-        public static final int vpi__background_holo_light=0x7f050001;
-        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f050004;
-        public static final int vpi__bright_foreground_disabled_holo_light=0x7f050005;
-        public static final int vpi__bright_foreground_holo_dark=0x7f050002;
-        public static final int vpi__bright_foreground_holo_light=0x7f050003;
-        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f050006;
-        public static final int vpi__bright_foreground_inverse_holo_light=0x7f050007;
-        public static final int vpi__dark_theme=0x7f050017;
-        public static final int vpi__light_theme=0x7f050018;
+        public static final int actionbar_background_end=0x7f060014;
+        public static final int actionbar_background_item_pressed_end=0x7f060016;
+        public static final int actionbar_background_item_pressed_start=0x7f060015;
+        public static final int actionbar_background_start=0x7f060013;
+        public static final int actionbar_separator=0x7f060011;
+        public static final int actionbar_title=0x7f060012;
+        public static final int default_circle_indicator_fill_color=0x7f060008;
+        public static final int default_circle_indicator_page_color=0x7f060009;
+        public static final int default_circle_indicator_stroke_color=0x7f06000a;
+        public static final int default_line_indicator_selected_color=0x7f06000b;
+        public static final int default_line_indicator_unselected_color=0x7f06000c;
+        public static final int default_title_indicator_footer_color=0x7f06000d;
+        public static final int default_title_indicator_selected_color=0x7f06000e;
+        public static final int default_title_indicator_text_color=0x7f06000f;
+        public static final int default_underline_indicator_selected_color=0x7f060010;
+        public static final int vpi__background_holo_dark=0x7f060000;
+        public static final int vpi__background_holo_light=0x7f060001;
+        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f060004;
+        public static final int vpi__bright_foreground_disabled_holo_light=0x7f060005;
+        public static final int vpi__bright_foreground_holo_dark=0x7f060002;
+        public static final int vpi__bright_foreground_holo_light=0x7f060003;
+        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f060006;
+        public static final int vpi__bright_foreground_inverse_holo_light=0x7f060007;
+        public static final int vpi__dark_theme=0x7f060017;
+        public static final int vpi__light_theme=0x7f060018;
     }
     public static final class dimen {
-        public static final int actionbar_height=0x7f08000d;
-        public static final int actionbar_item_height=0x7f08000e;
-        public static final int actionbar_item_width=0x7f08000f;
-        public static final int default_circle_indicator_radius=0x7f080000;
-        public static final int default_circle_indicator_stroke_width=0x7f080001;
-        public static final int default_line_indicator_gap_width=0x7f080003;
-        public static final int default_line_indicator_line_width=0x7f080002;
-        public static final int default_line_indicator_stroke_width=0x7f080004;
-        public static final int default_title_indicator_clip_padding=0x7f080005;
-        public static final int default_title_indicator_footer_indicator_height=0x7f080007;
-        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f080008;
-        public static final int default_title_indicator_footer_line_height=0x7f080006;
-        public static final int default_title_indicator_footer_padding=0x7f080009;
-        public static final int default_title_indicator_text_size=0x7f08000a;
-        public static final int default_title_indicator_title_padding=0x7f08000b;
-        public static final int default_title_indicator_top_padding=0x7f08000c;
+        public static final int actionbar_height=0x7f09000d;
+        public static final int actionbar_item_height=0x7f09000e;
+        public static final int actionbar_item_width=0x7f09000f;
+        public static final int default_circle_indicator_radius=0x7f090000;
+        public static final int default_circle_indicator_stroke_width=0x7f090001;
+        public static final int default_line_indicator_gap_width=0x7f090003;
+        public static final int default_line_indicator_line_width=0x7f090002;
+        public static final int default_line_indicator_stroke_width=0x7f090004;
+        public static final int default_title_indicator_clip_padding=0x7f090005;
+        public static final int default_title_indicator_footer_indicator_height=0x7f090007;
+        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f090008;
+        public static final int default_title_indicator_footer_line_height=0x7f090006;
+        public static final int default_title_indicator_footer_padding=0x7f090009;
+        public static final int default_title_indicator_text_size=0x7f09000a;
+        public static final int default_title_indicator_title_padding=0x7f09000b;
+        public static final int default_title_indicator_top_padding=0x7f09000c;
     }
     public static final class drawable {
         public static final int actionbar_back_indicator=0x7f020000;
@@ -380,36 +380,36 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpi__tab_unselected_pressed_holo=0x7f020014;
     }
     public static final class id {
-        public static final int actionbar=0x7f040011;
-        public static final int actionbar_actions=0x7f04000b;
-        public static final int actionbar_home=0x7f040006;
-        public static final int actionbar_home_bg=0x7f040008;
-        public static final int actionbar_home_btn=0x7f040009;
-        public static final int actionbar_home_is_back=0x7f04000a;
-        public static final int actionbar_home_logo=0x7f040007;
-        public static final int actionbar_item=0x7f04000e;
-        public static final int actionbar_progress=0x7f04000c;
-        public static final int actionbar_title=0x7f04000d;
-        public static final int bottom=0x7f040003;
-        public static final int bottombar=0x7f040013;
-        public static final int indicator=0x7f04000f;
-        public static final int menu_settings=0x7f040016;
-        public static final int none=0x7f040000;
-        public static final int pager=0x7f040010;
-        public static final int screen=0x7f040005;
-        public static final int sonarActionbar=0x7f040014;
-        public static final int sonarWebView=0x7f040015;
-        public static final int top=0x7f040004;
-        public static final int triangle=0x7f040001;
-        public static final int underline=0x7f040002;
-        public static final int webView=0x7f040012;
+        public static final int actionbar=0x7f050011;
+        public static final int actionbar_actions=0x7f05000b;
+        public static final int actionbar_home=0x7f050006;
+        public static final int actionbar_home_bg=0x7f050008;
+        public static final int actionbar_home_btn=0x7f050009;
+        public static final int actionbar_home_is_back=0x7f05000a;
+        public static final int actionbar_home_logo=0x7f050007;
+        public static final int actionbar_item=0x7f05000e;
+        public static final int actionbar_progress=0x7f05000c;
+        public static final int actionbar_title=0x7f05000d;
+        public static final int bottom=0x7f050003;
+        public static final int bottombar=0x7f050013;
+        public static final int indicator=0x7f05000f;
+        public static final int menu_settings=0x7f050016;
+        public static final int none=0x7f050000;
+        public static final int pager=0x7f050010;
+        public static final int screen=0x7f050005;
+        public static final int sonarActionbar=0x7f050014;
+        public static final int sonarWebView=0x7f050015;
+        public static final int top=0x7f050004;
+        public static final int triangle=0x7f050001;
+        public static final int underline=0x7f050002;
+        public static final int webView=0x7f050012;
     }
     public static final class integer {
-        public static final int default_circle_indicator_orientation=0x7f070000;
-        public static final int default_title_indicator_footer_indicator_style=0x7f070001;
-        public static final int default_title_indicator_line_position=0x7f070002;
-        public static final int default_underline_indicator_fade_delay=0x7f070003;
-        public static final int default_underline_indicator_fade_length=0x7f070004;
+        public static final int default_circle_indicator_orientation=0x7f080000;
+        public static final int default_title_indicator_footer_indicator_style=0x7f080001;
+        public static final int default_title_indicator_line_position=0x7f080002;
+        public static final int default_underline_indicator_fade_delay=0x7f080003;
+        public static final int default_underline_indicator_fade_length=0x7f080004;
     }
     public static final class layout {
         public static final int actionbar=0x7f030000;
@@ -419,30 +419,33 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sonar=0x7f030004;
     }
     public static final class menu {
-        public static final int activity_main=0x7f0b0000;
+        public static final int activity_main=0x7f0c0000;
     }
     public static final class string {
-        public static final int actionbar_activity_not_found=0x7f0a0002;
-        public static final int app_name=0x7f0a0001;
-        public static final int hello=0x7f0a0000;
-        public static final int menu_settings=0x7f0a0003;
-        public static final int music_title=0x7f0a0005;
-        public static final int stop=0x7f0a0006;
-        public static final int title=0x7f0a0004;
+        public static final int actionbar_activity_not_found=0x7f0b0002;
+        public static final int app_name=0x7f0b0001;
+        public static final int hello=0x7f0b0000;
+        public static final int menu_settings=0x7f0b0003;
+        public static final int music_title=0x7f0b0005;
+        public static final int stop=0x7f0b0006;
+        public static final int title=0x7f0b0004;
     }
     public static final class style {
-        public static final int ActionBar=0x7f090005;
-        public static final int ActionBarHomeItem=0x7f090007;
-        public static final int ActionBarHomeLogo=0x7f090008;
-        public static final int ActionBarItem=0x7f090006;
-        public static final int ActionBarProgressBar=0x7f090009;
-        public static final int AppTheme=0x7f09000b;
-        public static final int TextAppearance_TabPageIndicator=0x7f090003;
-        public static final int Theme_Duosuccess=0x7f09000a;
-        public static final int Theme_PageIndicatorDefaults=0x7f090000;
-        public static final int Widget=0x7f090001;
-        public static final int Widget_IconPageIndicator=0x7f090004;
-        public static final int Widget_TabPageIndicator=0x7f090002;
+        public static final int ActionBar=0x7f0a0005;
+        public static final int ActionBarHomeItem=0x7f0a0007;
+        public static final int ActionBarHomeLogo=0x7f0a0008;
+        public static final int ActionBarItem=0x7f0a0006;
+        public static final int ActionBarProgressBar=0x7f0a0009;
+        public static final int AppTheme=0x7f0a000b;
+        public static final int TextAppearance_TabPageIndicator=0x7f0a0003;
+        public static final int Theme_Duosuccess=0x7f0a000a;
+        public static final int Theme_PageIndicatorDefaults=0x7f0a0000;
+        public static final int Widget=0x7f0a0001;
+        public static final int Widget_IconPageIndicator=0x7f0a0004;
+        public static final int Widget_TabPageIndicator=0x7f0a0002;
+    }
+    public static final class xml {
+        public static final int wakeful=0x7f040000;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionBar.
