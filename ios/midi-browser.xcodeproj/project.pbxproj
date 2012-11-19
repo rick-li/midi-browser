@@ -340,7 +340,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -355,6 +356,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "DD506949-264F-41E2-BBB9-0D64A5F2ADD3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DD506949-264F-41E2-BBB9-0D64A5F2ADD3";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -366,7 +369,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -375,6 +379,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "DD506949-264F-41E2-BBB9-0D64A5F2ADD3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "54D30A58-DFE4-4CFC-B045-C3A8AF8B7144";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -384,15 +390,15 @@
 		7EC22FAB161033D700D55D41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test/midi-browser-Prefix.pch";
 				INFOPLIST_FILE = "test/midi-browser-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "midi-browser";
-				PROVISIONING_PROFILE = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
+				PROVISIONING_PROFILE = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -402,15 +408,15 @@
 		7EC22FAC161033D700D55D41 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zheng Jonathan (XAS582QG5G)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test/midi-browser-Prefix.pch";
 				INFOPLIST_FILE = "test/midi-browser-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "midi-browser";
-				PROVISIONING_PROFILE = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA18E121-96A6-4D2F-91C2-4C6C7A98524E";
+				PROVISIONING_PROFILE = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

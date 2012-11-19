@@ -19,11 +19,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "test/ViewController.m"
-         timestampString = "370759835.747929"
+         timestampString = "370782465.245473"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "459"
-         endingLineNumber = "459"
+         startingLineNumber = "458"
+         endingLineNumber = "458"
          landmarkName = "-createAUGraph"
          landmarkType = "5">
       </FileBreakpoint>
@@ -32,13 +32,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "test/ViewController.h"
-         timestampString = "370759835.747929"
+         timestampString = "370782465.245473"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
-         landmarkName = "@interface ViewController"
-         landmarkType = "2">
+         startingLineNumber = "36"
+         endingLineNumber = "36"
+         landmarkName = "-stopAction:"
+         landmarkType = "4">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
