@@ -111,7 +111,10 @@ h1 {
 		window.geoPos = position;
 		
 		showClock();
+		alert(position['coords']['addr']);
+		document.getElementById('address').innerHTML = position['coords']['addr'];
 		
+		/*
 		var latlng = new google.maps.LatLng(position.coords.latitude,
 				position.coords.longitude);
 		var mapOptions = {
@@ -156,7 +159,7 @@ h1 {
 			    
 			  }
 			});
-		
+		*/
 		
 		
 		
@@ -599,5 +602,5 @@ var realSonarOffsetMap =
 		"12/31":"-3\'03\"",
 		}
 </script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 </html>

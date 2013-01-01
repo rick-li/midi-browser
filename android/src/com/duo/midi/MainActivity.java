@@ -8,21 +8,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MainActivity extends FragmentActivity {
-	private boolean isMusicPageSelected = false;
+	private static final String TAG = "Main";
+	private boolean isMusicPageSelected = true;
 	MusicFragment musicFragment = null;
 	SonarFragment sonarFragment = null;
+	TabPageIndicator indicator = null;
 
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		Settings.System.putInt(getContentResolver(),
-				  Settings.System.WIFI_SLEEP_POLICY, 
-				  Settings.System.WIFI_SLEEP_POLICY_NEVER);
-		
+				Settings.System.WIFI_SLEEP_POLICY,
+				Settings.System.WIFI_SLEEP_POLICY_NEVER);
+
 		this.setContentView(com.duo.midi.R.layout.main);
 		FragmentStatePagerAdapter adapter = new DuosuccessAdapter(
 				getSupportFragmentManager());
@@ -33,7 +36,8 @@ public class MainActivity extends FragmentActivity {
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(adapter);
 
-		TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
+		this.indicator = (TabPageIndicator) findViewById(R.id.indicator);
+
 		indicator.setViewPager(pager);
 		indicator.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -76,9 +80,9 @@ public class MainActivity extends FragmentActivity {
 		public CharSequence getPageTitle(int position) {
 
 			if (position == 0) {
-				return "∂‡≥…“Ùò∑";
+				return "Â§öÊàêÈü≥Ê®Ç";
 			} else {
-				return "’ÊÃ´Íñïr";
+				return "ÁúüÂ§™ÈôΩÊôÇ";
 			}
 
 		}
@@ -91,8 +95,13 @@ public class MainActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
+		Log.i(TAG, "Main back pressed.");
+
 		if (isMusicPageSelected) {
-			this.musicFragment.onBackPressed();
+			boolean handled = this.musicFragment.onBackPressed();
+			if (!handled) {
+				super.onBackPressed();
+			}
 		} else {
 			super.onBackPressed();
 		}
@@ -106,6 +115,12 @@ public class MainActivity extends FragmentActivity {
 		this.musicFragment = musicFragment;
 	}
 
+	public TabPageIndicator getIndicator() {
+		return indicator;
+	}
 
+	public void setIndicator(TabPageIndicator indicator) {
+		this.indicator = indicator;
+	}
 
 }

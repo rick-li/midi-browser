@@ -14,13 +14,13 @@ public class Location extends Application {
 		
 	}
 	public void init(){
-		mLocationClient = new LocationClient(this.getApplicationContext()); // ÉùÃ÷LocationClientÀà
+		mLocationClient = new LocationClient(this.getApplicationContext()); // ï¿½ï¿½ï¿½ï¿½LocationClientï¿½ï¿½
 		setLocationOptions();
 	}
 	private void setLocationOptions() {
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);
-		//option.setAddrType("detail");
+		option.setAddrType("all");
 		option.setCoorType("bd09ll");
 		option.setScanSpan(10000);
 		option.setPriority( LocationClientOption.NetWorkFirst);

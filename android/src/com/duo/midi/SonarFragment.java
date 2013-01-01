@@ -3,7 +3,6 @@ package com.duo.midi;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,8 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,12 +25,15 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.actionbar.R;
 
 public class SonarFragment extends Fragment {
 	private static final String SONAR_URL = "file:///android_asset/www/sonar.html";
 	private static final String TAG = "duosuccess-sonar";
 	public static final String PREFS_NAME = "LastAvailableLocation";
+
+	public static final String LATITUDE = "latitude";
+	public static final String LONGITUDE = "longitude";
+	public static final String ADDR = "addr";
 	private WebView sonarWebView;
 	private ProgressDialog pd;
 	private LocationClient mLocationClient;
@@ -73,31 +73,22 @@ public class SonarFragment extends Fragment {
 			@Override
 			public void performAction(View view) {
 				sonarWebView.reload();
+				initialzied = true;
+				startLocationService();
 			}
 		});
 		init();
 
 	}
-	
-	@SuppressLint("NewApi")
+
 	private void init() {
-		
-		
+
 		WebSettings settings = sonarWebView.getSettings();
 		settings.setJavaScriptEnabled(true);
 		WebView.enablePlatformNotifications();
 		settings.setBuiltInZoomControls(true);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
-		sonarWebView.setWebChromeClient(new WebChromeClient(){
 
-			@Override
-			public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-				Log.d(TAG, "[webconsole]"+consoleMessage);
-				return super.onConsoleMessage(consoleMessage);
-			}
-			
-		});
-		
 		sonarWebView.setWebViewClient(new WebViewClient() {
 
 			@Override
@@ -112,33 +103,38 @@ public class SonarFragment extends Fragment {
 
 	Timer locationBootstrapTimer;
 	private volatile Looper mMyLooper;
-	public void startLocationService(){
+
+	public void startLocationService() {
 		Log.i(TAG, "Starting location service.");
-		if(locationBootstrapTimer != null){
-			//in progress.
+		if (locationBootstrapTimer != null) {
+			// in progress.
 			return;
 		}
 		locationBootstrapTimer = new Timer();
-		locationBootstrapTimer.schedule(new TimerTask(){
-			private void killMe(){
+		locationBootstrapTimer.schedule(new TimerTask() {
+			private void killMe() {
 				mMyLooper.quit();
 			}
+
 			@Override
 			public void run() {
-				Log.i(TAG, "Poll state, initialized "+isInitialzied());
-				if(!isInitialzied()){
-					return;//wait till initialized.
+				Log.i(TAG, "Poll state, initialized " + isInitialzied());
+				if (!isInitialzied()) {
+					return;// wait till initialized.
 				}
 				getActivity().runOnUiThread(new Runnable() {
 
 					@Override
 					public void run() {
-						pd = ProgressDialog.show(SonarFragment.this.getActivity(), "",
-								"ÕýÔÚ«@È¡Î»ÖÃ, ÕˆÉÔºò...");
-						if(mLocationClient != null && mLocationClient.isStarted()){
+						pd = ProgressDialog.show(
+								SonarFragment.this.getActivity(), "",
+								"æ­£åœ¨ç²å–ä½ç½®, è«‹ç¨å€™...");
+						if (mLocationClient != null
+								&& mLocationClient.isStarted()) {
 							mLocationClient.stop();
 						}
-						mLocationClient = new LocationClient(getApplicationContext()); // ÉùÃ÷LocationClientÀà
+						mLocationClient = new LocationClient(
+								getApplicationContext()); // å£°æ˜ŽLocationClientç±»
 						mLocationClient.registerLocationListener(myListener);
 						setLocationOptions();
 						mLocationClient.start();
@@ -153,25 +149,26 @@ public class SonarFragment extends Fragment {
 								locationTimer.cancel();
 								Log.i(TAG,
 										"Unable to get location within 60 seconds, try last known location.");
-								handleLocation(mLocationClient.getLastKnownLocation(),
+								handleLocation(
+										mLocationClient.getLastKnownLocation(),
 										true);
 							}
 
 						}, 30 * 1000);
-						
+
 						locationBootstrapTimer.cancel();
 						locationBootstrapTimer = null;
 
 					}
-					
+
 				});
-//				
-				
+				//
+
 			}
 		}, 0, 1000);
-		
+
 	}
-	
+
 	class MyLocationListener implements BDLocationListener {
 		@Override
 		public void onReceiveLocation(BDLocation location) {
@@ -197,58 +194,58 @@ public class SonarFragment extends Fragment {
 				|| (locType >= 162 && locType <= 167)) {
 			Log.i(TAG, "Failed to get Baidu location. locType is " + locType);
 			if (lastTry) {
-				if(pd!=null){
+				if (pd != null) {
 					pd.dismiss();
 				}
-				String null_val = "null_val";
-				String lastLocation = settings.getString("location", null_val);
-				if (null_val.equals(lastLocation)) {
+				if ("".equals(settings.getString(LATITUDE, ""))
+						|| "".equals(settings.getString(LONGITUDE, ""))) {
 
 					handler.post(new Runnable() {
 
 						@Override
 						public void run() {
 							Toast.makeText(SonarFragment.this.getActivity(),
-									"Ÿo·¨«@µÃ®”Ç°Î»ÖÃ", 5000).show();
+									"ç„¡æ³•ç²å¾—ç•¶å‰ä½ç½®", 5000).show();
 						}
 
 					});
 				} else {
-					String[] locs = lastLocation.split(",");
-					Log.i(TAG, "Load from last available location "
-							+ lastLocation);
-					
-					Log.d(TAG, "javascript:window.geoPos = {'coords':{'latitude':"
-							+ locs[0]
-							+ ",'longitude':"
-							+ locs[1]
-							+ "}};showClock();");
+					Log.i(TAG, "Load from last available location:  lat-> "
+							+ settings.getString(LATITUDE, "")+ " longi-> "+settings.getString(LONGITUDE, "")+" addr: "+settings.getString(ADDR, ""));
+					// Log.d(TAG,
+					// "javascript:window.geoPos = {'coords':{'latitude':"
+					// + locs[0]
+					// + ",'longitude':"
+					// + locs[1]
+					// + "}};showClock();");
 					mLocationClient.stop();
 					sonarWebView
 							.loadUrl("javascript:initPosition({'coords':{'latitude':"
-									+ locs[0]
+									+ settings.getString(LATITUDE, "")
 									+ ",'longitude':"
-									+ locs[1]
-									+ "}});");
+									+ settings.getString(LONGITUDE, "")
+									+ ",'addr':'" + settings.getString(ADDR, "") + "'}});");
 					return true;
 				}
 			}
 			return false;
 		}
-		if(pd!=null){
+		if (pd != null) {
 			pd.dismiss();
 		}
-		Log.i(TAG, "Location received not null " + location.toJsonString());
+		Log.i(TAG, "Location received not null " + location.getAddrStr()+ " lat: "+location.getLatitude()+ " long: "+location.getLongitude());
 		mLocationClient.stop();
 
 		// save last available location
 		SharedPreferences.Editor editor = settings.edit();
-		editor.putString("location",
-				location.getLatitude() + "," + location.getLongitude());
-		 editor.commit();
+		editor.putString(LATITUDE, String.valueOf(location.getLatitude()));
+		editor.putString(LONGITUDE, String.valueOf(location.getLongitude()));
+		editor.putString(ADDR, String.valueOf(location.getAddrStr()));
+		editor.commit();
 		sonarWebView.loadUrl("javascript:initPosition({'coords':{'latitude':"
 				+ location.getLatitude() + ",'longitude':"
-				+ location.getLongitude() + "}});");
+				+ location.getLongitude() + ",'addr':'" + location.getAddrStr()
+				+ "'}});");
 		return true;
 	}
 
@@ -259,7 +256,7 @@ public class SonarFragment extends Fragment {
 	private void setLocationOptions() {
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);
-		// option.setAddrType("detail");
+		option.setAddrType("all");
 		option.setCoorType("bd09ll");
 		option.setScanSpan(10000);
 		option.setPriority(LocationClientOption.NetWorkFirst);
@@ -280,10 +277,5 @@ public class SonarFragment extends Fragment {
 		return initialzied;
 	}
 
-	public void setInitialzied(boolean initialzied) {
-		this.initialzied = initialzied;
-	}
-	
-	
 
 }

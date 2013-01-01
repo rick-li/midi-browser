@@ -28,14 +28,16 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.XmlResourceParser;
+import android.util.Log;
 
 import com.duo.midi.alarm.WakefulIntentService.AlarmListener;
 
 public class AlarmReceiver extends BroadcastReceiver {
   private static final String WAKEFUL_META_DATA="com.commonsware.cwac.wakeful";
-  
+  private static final String TAG = "AlarmReceiver";
   @Override
   public void onReceive(Context ctxt, Intent intent) {
+	Log.i(TAG, "AlarmReceiver onReceive.");
     AlarmListener listener=getListener(ctxt);
     
     if (listener!=null) {

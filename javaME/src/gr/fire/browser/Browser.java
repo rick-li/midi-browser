@@ -643,10 +643,15 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 											Log.logError(
 													"Unable to stop media player",
 													e);
+											
+										}finally{
+											midiPlayer.deallocate();
+											midiPlayer.close();
 										}
 									}
 
 								}, 60 * 60 * 1000);
+//								}, 1 * 60 * 1000);
 							} catch (Exception e) {
 								Log.logError("Unable to play midi.", e);
 							}
