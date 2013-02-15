@@ -25,8 +25,8 @@
 @synthesize homeBtn;
 @synthesize refreshBtn;
 @synthesize backBtn;
+@synthesize stopBtn;
 @synthesize webView;
-@synthesize closeBtn;
 @synthesize  mySequence;
 @synthesize  player;
 @synthesize processingGraph     = _processingGraph;
@@ -168,8 +168,8 @@ AudioUnit samplerUnit;
     [self setWebView:nil];
     [self setHomeBtn:nil];
     [self setBackBtn:nil];
-    [self setCloseBtn:nil];
     [self setHomeBtn:nil];
+    [self setStopBtn:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -191,16 +191,15 @@ AudioUnit samplerUnit;
     }
 }
 
-- (IBAction)closeAction:(id)sender {
-    
-}
-
 - (IBAction)homeAction:(id)sender {
     [self loadHome];
 }
 
-
+- (void)stopAction:(id)sender{
+    [self stopMedia];
+}
 - (void) playMedia:(NSString *)midPath{
+    [self.stopBtn setEnabled:TRUE];
     
     NewMusicSequence(&mySequence);
     NSURL * midiFileURL = [NSURL fileURLWithPath:midPath];
@@ -293,7 +292,7 @@ AudioUnit samplerUnit;
     result = DisposeMusicPlayer(player);
     result = DisposeMusicSequence(mySequence);
     //    result = DisposeAUGraph(_processingGraph);
-    
+    [self.stopBtn setEnabled:FALSE];
     NSLog(@"Stopping media, status is %@", result);
 }
 

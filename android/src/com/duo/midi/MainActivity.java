@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
+import com.duosuccess.midi.R;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MainActivity extends FragmentActivity {
@@ -26,7 +27,7 @@ public class MainActivity extends FragmentActivity {
 				Settings.System.WIFI_SLEEP_POLICY,
 				Settings.System.WIFI_SLEEP_POLICY_NEVER);
 
-		this.setContentView(com.duo.midi.R.layout.main);
+		this.setContentView(R.layout.main);
 		FragmentStatePagerAdapter adapter = new DuosuccessAdapter(
 				getSupportFragmentManager());
 

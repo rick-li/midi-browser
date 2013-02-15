@@ -19,8 +19,9 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshBtn;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backBtn;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *stopBtn;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBtn;
+
 
 
 @property MusicSequence mySequence;
@@ -32,6 +33,7 @@
 - (IBAction)backAction:(id)sender;
 
 - (IBAction)homeAction:(id)sender;
+- (IBAction)stopAction:(id)sender;
 
 - (void)loadHome;
 - (void)stopMedia;

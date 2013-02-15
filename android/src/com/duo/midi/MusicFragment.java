@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import com.duo.midi.alarm.WakefulIntentService;
 import com.duo.midi.music.MusicRepeatListener;
+import com.duosuccess.midi.R;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 

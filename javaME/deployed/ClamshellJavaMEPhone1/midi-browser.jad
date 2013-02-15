@@ -1,8 +1,0 @@
-MIDlet-1: midiBrowser,/icon.gif,gr.fire.test.MidiBrowser
-MIDlet-Jar-Size: 211467
-MIDlet-Jar-URL: midi-browser.jar
-MIDlet-Name: 多成音乐浏览器
-MIDlet-Vendor: 多成中医
-MIDlet-Version: 1.0.0
-MicroEdition-Configuration: CLDC-1.0
-MicroEdition-Profile: MIDP-1.0

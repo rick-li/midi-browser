@@ -4,7 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>test.xcscheme</key>
+		<key>midi-browser-debug.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>midi-browser-release.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
