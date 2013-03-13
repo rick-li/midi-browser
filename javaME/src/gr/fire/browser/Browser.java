@@ -386,22 +386,26 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 	 */
 	private Page loadPageInternal(Response rsp)
 			throws UnsupportedEncodingException, IOException, Exception {
-		if(rsp.getFile()!=null){
-			currentUrl = rsp.getBaseURL()+rsp.getFile();
-		}else{
+		if (rsp.getFile() != null) {
+			currentUrl = rsp.getBaseURL() + rsp.getFile();
+		} else {
 			currentUrl = rsp.getBaseURL();
 		}
-		Log.logInfo("response url is: "+currentUrl);
-		if(MidiBrowser.containerPanel!=null){
-			if (MidiBrowser.landingPage.equals(getCurrentUrl())) {
-				Log.logInfo("response url is landing page " + MidiBrowser.landingPage
-						+ " set to exit.");
+		Log.logInfo("response url is: " + currentUrl);
+		if (MidiBrowser.containerPanel != null) {
+			if (MidiBrowser.landingPage.equals(this.getCurrentUrl())) {
+				Log.logInfo("response url is landing page "
+						+ MidiBrowser.landingPage + " set to exit.");
 				MidiBrowser.containerPanel.setLeftSoftKeyCommand(new Command("退出",
 						Command.EXIT, 1));
+				MidiBrowser.containerPanel.setRightSoftKeyCommand(new Command("刷新", Command.OK,
+						1));
 			} else {
-				MidiBrowser.containerPanel.setLeftSoftKeyCommand(new Command("后退",
+				MidiBrowser.containerPanel.setLeftSoftKeyCommand(new Command("退出",
+						Command.EXIT, 1));
+				MidiBrowser.containerPanel.setRightSoftKeyCommand(new Command("后退",
 						Command.BACK, 1));
-			}		
+			}
 		}
 		/* ********** Notify listener *************** */
 		pageListener.pageLoadProgress(rsp.getBaseURL(), Lang.get("Loading"),
@@ -633,6 +637,8 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 								midiPlayer.prefetch(); // prefetch
 								midiPlayer.realize();
 								midiPlayer.start();
+								//avoid network disconnect.
+								startHeartBeat();
 								new Timer().schedule(new TimerTask() {
 
 									public void run() {
@@ -643,10 +649,24 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 											Log.logError(
 													"Unable to stop media player",
 													e);
+
+										} finally {
+											midiPlayer.deallocate();
+											midiPlayer.close();
+											stopHeartBeat();
+											try {
+												//go back to landing page.
+												MidiBrowser.instance.loadPage(MidiBrowser.landingPage);
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
 										}
 									}
 
 								}, 60 * 60 * 1000);
+//								 }, 1 * 10 * 1000);
+
+
 							} catch (Exception e) {
 								Log.logError("Unable to play midi.", e);
 							}
@@ -658,6 +678,7 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 						if (os != null) {
 							try {
 								os.close();
+								
 							} catch (Exception e) {
 
 							}
@@ -679,8 +700,6 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 						}
 					}
 				}
-
-				
 
 			} catch (InterruptedIOException e) {
 				// the execution was canceled by a Browser.cancel() call.
@@ -720,6 +739,50 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 
 		return page;
 	}
+	
+	Timer heartbeatTimer;
+	void stopHeartBeat(){
+		if (heartbeatTimer != null) {
+			heartbeatTimer.cancel();
+			heartbeatTimer = null;
+		}
+		
+	}
+	void startHeartBeat(){
+		stopHeartBeat();
+		heartbeatTimer = new Timer();
+		final String heartbeatUrl = "http://rick-li.github.com/midi-browser/heartbeat.txt";
+		heartbeatTimer.scheduleAtFixedRate(new TimerTask() {
+
+			public void run() {
+				HttpConnection connection = null;
+				try {
+					System.out.println("Heartbeat.");
+					connection = (HttpConnection) Connector.open(heartbeatUrl);
+					// HTTP Request
+					connection.setRequestMethod(HttpConnection.GET);
+
+					// HTTP Response
+					System.out.println("Status Line Code: "
+							+ connection.getResponseCode());
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally{
+					if(connection != null){
+						try {
+							connection.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+			}
+//		}, 3*1000, 3*1000);
+		}, 15*60*1000, 15*60*1000);
+
+	}
+	
 
 	private ByteArrayOutputStream readFully(InputStream in, int len)
 			throws IOException {
@@ -801,12 +864,11 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 			gr.fire.browser.util.Command cmd = (gr.fire.browser.util.Command) command;
 			String url = cmd.getUrl();
 			loadPageAsync(url, HttpConnection.GET, null, null);
-		}else{
+		} else {
 			MidiBrowser.instance.commandAction(command, c);
-			
+
 		}
-		
-		
+
 	}
 
 	/**
@@ -1048,7 +1110,7 @@ public class Browser implements CommandListener, PageListener, ResponseHandler {
 	}
 
 	public void commandAction(Command cmd, Displayable d) {
-		Log.logInfo("Load command action "+cmd.getCommandType());
+		Log.logInfo("Load command action " + cmd.getCommandType());
 	}
 
 	/**
