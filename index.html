@@ -3,15 +3,25 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="多成MIDI浏览器.  : " />
+    <meta name="description" content="多成音樂瀏覽器" />
+	<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+	<style>
+		#header_wrap .inner{
+			padding: 30px 10px 5px 10px;
+		}
+		.section{
+			border-bottom: solid 1px;
+			margin: 20px 0;
+		}
+	</style>
 	<script type="text/javascript">
 	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9cfd501af329e69f70c34f5531d3fea1' type='text/javascript'%3E%3C/script%3E"));
 	</script>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    
 
-    <title>多成MIDI浏览器. </title>
+    <title>多成音樂瀏覽器. </title>
   </head>
 
   <body>
@@ -21,7 +31,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/rick-li/midi-browser">View on GitHub</a>
 
-          <h1 id="project_title">多成MIDI浏览器.安卓,IOS,JavaME </h1>
+          <h1 id="project_title">多成音樂瀏覽器</h1>
           <h2 id="project_tagline"></h2>
 
             <!--<section id="downloads">
@@ -34,8 +44,33 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>支持多成midi音乐播放.</h3>
-
+        <!--<h3>支持多成音樂播放.</h3>-->
+		<div class="section">
+			<p><h3>安卓版</h3><h3><a href="http://rick-li.github.com/midi-browser/midi-browser1.1.apk" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'android']);">下載</a> &nbsp <a href="http://qrfree.kaywa.com/?s=8&d=http%3A%2F%2Frick-li.github.com%2Fmidi-browser%2Fmidi-browser1.1.apk" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'android']);">二維碼</a></h3> 
+			<strong>適合安卓2.2以上的手機和平板</strong>
+			</p>
+		</div>
+		
+		<div class="section">
+			<p><h3>IPHONE/IPAD版</h3><h3><a href="itms-services://?action=download-manifest&url=http://www.sicpc.com/midi-browser/midi-browser.plist" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'ios']);">下載</a> &nbsp <a href="qr_sicpc.png" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'ios']);">二維碼</a></h3> 
+			<strong>支持5.0以上手機和平板</strong>
+			</p>
+		</div>
+		
+		<div class="section">
+			<p><h3>JAVA版</h3><h3><a href="http://rick-li.github.com/midi-browser/midi-browser.zip" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'JavaME-desktop']);">电脑下载</a></h3>
+			<h3>
+<p><a href="http://rick-li.github.com/midi-browser/midi-browser.jad" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'JavaME-mobile']);">手机直接下载</a></h3>
+			<strong>支持諾基亞等有JAVA功能的手機</strong>
+			</p>
+		</div>
+		
+		<div class="section">
+			<p><h3>MAC版</h3><h3><a href="http://rick-li.github.com/android-midi/midi-browser.zip" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'mac']);">下载</a></h3>
+			<strong>支持蘋果電腦</strong>
+			</p>
+		</div>
+<!--
 <p><strong>Java版用于所有支持java的系统，包括诺基亚塞班</strong></p>
 <p><a href="http://rick-li.github.com/midi-browser/midi-browser.zip" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'JavaME-desktop']);">电脑下载</a></p>
 <p><a href="http://rick-li.github.com/midi-browser/midi-browser.jad" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'JavaME-mobile']);">手机直接下载</a></p>
@@ -45,21 +80,22 @@
 <p><img style="height:150px;width:150px !important;" src="http://qrfree.kaywa.com/?s=8&d=http%3A%2F%2Frick-li.github.com%2Fmidi-browser%2Fmidi-browser1.1.apk" alt="二维码"/></p>
 
 <p><strong>IOS版支持5.0以上系统 (包括iphone, ipad, ipod touch), 已支持非越獄設備</strong></p>
-<!--
-<p><strong>或者将UDID发给在下racke1983cn@gmail.com以加入测试</strong></p>
--->
+
 <p></p><a href="itms-services://?action=download-manifest&url=http://www.sicpc.com/midi-browser/midi-browser.plist" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'ios']);">下载1 （國內推薦)</a></p>
 <p><img style="height:150px;width:150px !important;" src="qr_sicpc.png" alt="QRCode"/></p>
 
 
 <p></p><a href="itms-services://?action=download-manifest&url=http://rick-li.github.com/midi-browser/midi-browser.plist" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'ios']);">下载2</a></p>
 <p><img style="height:150px;width:150px !important;" src="http://qr.kaywa.com/?s=8&d=itms-services%3A%2F%2F%3Faction%3Ddownload-manifest%26url%3Dhttp%3A%2F%2Frick-li.github.com%2Fmidi-browser%2Fmidi-browser.plist" alt="QRCode"/></p>
+
+
 <ol>
 <li>自动打开多成主页</li>
 <li>体积小</li>
 <li>自动清除缓存</li>
 <li>支持休眠/锁屏时播放</li>
 </ol>
+-->
       </section>
     </div>
 
@@ -67,13 +103,6 @@
     <div id="footer_wrap" class="outer">
       <footer class="inner">
 	<p>联系方式<a href="mailto:racke1983cn@gmail.com?Subject=MidiBrowser">&nbsp racke1983cn@gmail.com</a>
-<!--
-Skype 'My status' button
-http://www.skype.com/go/skypebuttons
-
-<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
-<a href="skype:racke1983?call"><img src="http://mystatus.skype.com/bigclassic/racke1983" style="border: none;" width="182" height="44" alt="My status" /></a>
--->
 
 	</p>
         <p class="copyright">多成MIDI浏览器.  maintained by <a href="https://github.com/rick-li">rick-li</a></p>
