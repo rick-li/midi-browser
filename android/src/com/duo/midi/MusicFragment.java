@@ -50,8 +50,8 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	private static final int CLICK_ON_WEBVIEW = 1;
 
 	private static final String homeUrl = "http://www.duosuccess.com";
-	// private static final String homeUrl =
-	// "http://rick-li.github.io/android-midi/index.html";
+//	 private static final String homeUrl =
+//	 "http://rick-li.github.io/android-midi/index.html";
 	// private static final String homeUrl = "http://www.baidu.com";
 	private String strBaseDir = Environment.getExternalStorageDirectory()
 			.getPath() + "/duosuccess";
@@ -71,9 +71,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	public static int musicDuration = 1 * 60 * 60 * 1000;
 	public static int waitAddition = 10 * 60 * 1000;
 
-	// public static int waitInterval = 10 * 1000;
-	// public static int waitAddition = 6 * 1000;
-	// public static int musicDuration = 10 * 1000;
+//	 public static int waitInterval = 10 * 1000;
+//	 public static int waitAddition = 6 * 1000;
+//	 public static int musicDuration = 10 * 1000;
 
 	// private boolean isMusicServiceStarted = false;
 
