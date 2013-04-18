@@ -14,9 +14,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -51,12 +51,12 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 
 	private static final String homeUrl = "http://www.duosuccess.com";
 	// private static final String homeUrl =
-	// "http://rick-li.github.com/android-midi/index.html";
+	// "http://rick-li.github.io/android-midi/index.html";
 	// private static final String homeUrl = "http://www.baidu.com";
 	private String strBaseDir = Environment.getExternalStorageDirectory()
 			.getPath() + "/duosuccess";
 	private String tmpMidiFile = strBaseDir + "/tmpMid.mid";
-	private MediaPlayer mp = new MediaPlayer();
+	// private MediaPlayer mp = new MediaPlayer();
 	public static WebView webView;
 	private Timer musicTimer;
 	private Timer waitTimer;
@@ -71,9 +71,11 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	public static int musicDuration = 1 * 60 * 60 * 1000;
 	public static int waitAddition = 10 * 60 * 1000;
 
-//	public static int waitInterval = 10 * 1000;
-//	public static int waitAddition = 6 * 1000;
-//	public static int musicDuration = 10 * 1000;
+	// public static int waitInterval = 10 * 1000;
+	// public static int waitAddition = 6 * 1000;
+	// public static int musicDuration = 10 * 1000;
+
+	// private boolean isMusicServiceStarted = false;
 
 	enum STATE {
 		stop {
@@ -228,7 +230,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
 		WebView.enablePlatformNotifications();
-		//settings.setDefaultZoom(ZoomDensity.CLOSE);
+		// settings.setDefaultZoom(ZoomDensity.CLOSE);
 		settings.setBuiltInZoomControls(true);
 		settings.setPluginsEnabled(true);
 		settings.setUseWideViewPort(true);
@@ -260,7 +262,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 				fullscreenLocked = false;
 				try {
 					pd = ProgressDialog.show(MusicFragment.this.getActivity(),
-							"", "请稍侯");
+							"", "页面切换，请稍侯");
 					new Timer().schedule(new TimerTask() {
 
 						@Override
@@ -271,6 +273,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 					}, 30 * 1000);
 					stopMedia();
 				} catch (Exception e) {
+					Log.e(TAG, "Error stop music", e);
 				}
 				super.onPageStarted(view, url, favicon);
 			}
@@ -315,15 +318,15 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 						"请稍侯");
 				clearCache();
 				try {
-					handler.post(new Runnable(){
+					handler.post(new Runnable() {
 
 						@Override
 						public void run() {
 							fullscreenLocked = true;
 							quitFullScreen();
-							
+
 						}
-						
+
 					});
 					URLConnection cn = new URL(midiUrl).openConnection();
 					InputStream stream = cn.getInputStream();
@@ -392,12 +395,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 
 	private void playMusic(File tmpMidFile) throws Exception {
 		logToFile(new Date().toString() + " Start play music.");
-		mp = new MediaPlayer();
-		mp.setDataSource(MusicFragment.this.getActivity(),
-				Uri.fromFile(tmpMidFile));
-		mp.prepare();
-		mp.setLooping(true);
-		mp.start();
+		Intent i = new Intent(this.getActivity(), MusicService.class);
+		i.putExtra("midiFile", tmpMidFile.getAbsolutePath());
+		this.getActivity().startService(i);
 		final Date startDate = new Date();
 
 		final SimpleDateFormat startSdf = new SimpleDateFormat("MM/dd HH:mm:ss");
@@ -420,7 +420,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 						+ new SimpleDateFormat("mm:ss").format(new Date(
 								timeCounter.getStartMillSec())));
 				if (timeCounter.getStartMillSec() == musicDuration) {
-					mp.stop();
+					stopMusicService();
 					if (needRepeat) {
 						if (alarmStarted) {
 							WakefulIntentService.cancelAlarms(getActivity());
@@ -468,16 +468,25 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		}
 	}
 
-	private void stopMedia() {
-		if (mp.isPlaying()) {
-			mp.stop();
-			Log.i(TAG, "media is stopped.");
+	private void stopMusicService() {
+		Log.i(TAG, "Stopping service");
+		try {
+			Intent i = new Intent(this.getActivity(), MusicService.class);
+			this.getActivity().stopService(i);
+		} catch (Exception e) {
+			
 		}
+	}
+
+	private void stopMedia() {
+		stopMusicService();
+
 		setFooterText(STATE.stop.toString());
 		if (musicTimer != null) {
 			musicTimer.cancel();
 		}
 		stopWaitTimer();
+		clearCache();
 	}
 
 	public boolean onBackPressed() {
@@ -562,7 +571,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	}
 
 	private void goFullScreen() {
-		if(fullscreenLocked){
+		if (fullscreenLocked) {
 			return;
 		}
 		actionBar.setVisibility(View.GONE);

@@ -23,7 +23,7 @@ public class MusicRepeatListener implements WakefulIntentService.AlarmListener {
 	}
 
 	public void sendWakefulWork(Context ctxt) {
-		WakefulIntentService.sendWakefulWork(ctxt, MusicService.class);
+		WakefulIntentService.sendWakefulWork(ctxt, MusicWakeService.class);
 	}
 
 	public long getMaxAge() {

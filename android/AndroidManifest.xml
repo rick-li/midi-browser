@@ -41,6 +41,8 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
+        
+        <service android:name="com.duo.midi.MusicService"></service>
 
         <activity
             android:name="com.duo.midi.MainActivity"
@@ -64,7 +66,7 @@
                 android:resource="@xml/wakeful" />
         </receiver>
 
-        <service android:name="com.duo.midi.music.MusicService" >
+        <service android:name="com.duo.midi.music.MusicWakeService" >
         </service>
     </application>
 
