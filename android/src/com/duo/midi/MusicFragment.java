@@ -9,14 +9,16 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -30,6 +32,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.ZoomDensity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
@@ -55,8 +58,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	// private static final String homeUrl = "http://www.baidu.com";
 	private String strBaseDir = Environment.getExternalStorageDirectory()
 			.getPath() + "/duosuccess";
-	private String tmpMidiFile = strBaseDir + "/tmpMid.mid";
-	// private MediaPlayer mp = new MediaPlayer();
+	private String tmpMidiFile = "duo-music.mid";
 	public static WebView webView;
 	private Timer musicTimer;
 	private Timer waitTimer;
@@ -74,8 +76,6 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 //	 public static int waitInterval = 10 * 1000;
 //	 public static int waitAddition = 6 * 1000;
 //	 public static int musicDuration = 10 * 1000;
-
-	// private boolean isMusicServiceStarted = false;
 
 	enum STATE {
 		stop {
@@ -204,7 +204,14 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			@Override
 			public void performAction(View view) {
 				actionBar.setProgressBarVisibility(View.VISIBLE);
-				webView.reload();
+				handler.post(new Runnable(){
+
+					@Override
+					public void run() {
+						webView.reload();
+						
+					}
+				});
 			}
 		});
 
@@ -230,14 +237,14 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
 		WebView.enablePlatformNotifications();
-		// settings.setDefaultZoom(ZoomDensity.CLOSE);
+		 settings.setDefaultZoom(ZoomDensity.CLOSE);
 		settings.setBuiltInZoomControls(true);
 		settings.setPluginsEnabled(true);
 		settings.setUseWideViewPort(true);
 		settings.setSupportZoom(true);
-		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-		this.setObjectParam(settings, "setLoadWithOverviewMode", false);
-		this.setObjectParam(settings, "setDisplayZoomControls", false);
+//		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+//		this.setObjectParam(settings, "setLoadWithOverviewMode", false);
+//		this.setObjectParam(settings, "setDisplayZoomControls", false);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
 		webView.setOnTouchListener(new OnTouchListener() {
@@ -262,7 +269,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 				fullscreenLocked = false;
 				try {
 					pd = ProgressDialog.show(MusicFragment.this.getActivity(),
-							"", "页面切换，请稍侯");
+							"", "页面加载，请稍侯");
 					new Timer().schedule(new TimerTask() {
 
 						@Override
@@ -314,8 +321,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 							+ "/" + midiFile;
 				}
 				Log.i(TAG, "midi is " + midiUrl);
-				pd = ProgressDialog.show(MusicFragment.this.getActivity(), "",
-						"请稍侯");
+//				pd = ProgressDialog.show(MusicFragment.this.getActivity(), "",
+//						"请稍侯");
+				Toast.makeText(getActivity(), "准备下载音乐", 3000).show();
 				clearCache();
 				try {
 					handler.post(new Runnable() {
@@ -328,27 +336,28 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 						}
 
 					});
+					setFooterText("正在下载音乐");
 					URLConnection cn = new URL(midiUrl).openConnection();
 					InputStream stream = cn.getInputStream();
-					byte[] buffer = new byte[512];
-
-					File tmpMidFile = new File(tmpMidiFile);
-					tmpMidFile.createNewFile();
-					FileOutputStream fos = new FileOutputStream(tmpMidFile);
+					byte[] buffer = new byte[1024];
+					
+					Activity activity = getActivity();
+					FileOutputStream fos = activity.openFileOutput(tmpMidiFile, Activity.MODE_PRIVATE);
 					int n = -1;
 					while ((n = stream.read(buffer)) != -1) {
 						fos.write(buffer, 0, n);
 					}
 					fos.close();
 					stream.close();
-					pd.dismiss();
-					playMusic(tmpMidFile);
+					setFooterText("下载完成");
+					//pd.dismiss();
+					playMusic();
 
 				} catch (Exception e) {
 					logToFile(new Date().toString() + " Unable to play music, "
 							+ e.getMessage());
 					Log.e(TAG, "unable to play midi. ", e);
-
+					Toast.makeText(getActivity(), "无法下载音乐文件", 5000).show();
 				}
 			}
 		}
@@ -393,10 +402,10 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		}, 0, 1000);
 	}
 
-	private void playMusic(File tmpMidFile) throws Exception {
+	private void playMusic() throws Exception {
 		logToFile(new Date().toString() + " Start play music.");
 		Intent i = new Intent(this.getActivity(), MusicService.class);
-		i.putExtra("midiFile", tmpMidFile.getAbsolutePath());
+		i.putExtra("midiFile", this.tmpMidiFile);
 		this.getActivity().startService(i);
 		final Date startDate = new Date();
 
@@ -408,6 +417,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			musicTimer.cancel();
 		}
 		musicTimer = new Timer();
+		final long startTimeAccr = System.currentTimeMillis();
 		final TimeCounter timeCounter = new TimeCounter();
 		musicTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
@@ -419,7 +429,8 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 						+ " 已播放 "
 						+ new SimpleDateFormat("mm:ss").format(new Date(
 								timeCounter.getStartMillSec())));
-				if (timeCounter.getStartMillSec() == musicDuration) {
+				long nowAccr = System.currentTimeMillis();
+				if ((nowAccr - startTimeAccr) >= musicDuration) {
 					stopMusicService();
 					if (needRepeat) {
 						if (alarmStarted) {
@@ -460,12 +471,21 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	}
 
 	private void clearCache() {
-		webView.clearCache(true);
-		File tmpMidi = new File(tmpMidiFile);
-		if (tmpMidi.exists()) {
-			boolean status = tmpMidi.delete();
-			Log.i(TAG, "TMP midi file removed status: " + status);
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				webView.clearCache(true);
+			}
+		});
+		String[] fileAry = this.getActivity().fileList();
+		List<String> fileList = Arrays.asList(fileAry);
+		if(fileList.contains(tmpMidiFile)){
+			if(this.getActivity().deleteFile(tmpMidiFile)){
+				Log.i(TAG, "Successfully cleared cache.");
+				Toast.makeText(this.getActivity(), "已经清除缓存音乐", 2000).show();
+			}
 		}
+		
 	}
 
 	private void stopMusicService() {

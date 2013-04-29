@@ -1,6 +1,7 @@
 package com.duo.midi;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,28 +42,39 @@ public class MusicService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d(TAG, "onHandleIntent");
-		String urlPath = intent.getStringExtra("midiFile");
-		Log.i(TAG, "URL PATH is " + urlPath);
-		File tmpMidiFile = new File(urlPath);
+		String midiName = intent.getStringExtra("midiFile");
+		FileInputStream fis = null;
+		try {
+			fis = this.openFileInput(midiName);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+			Toast.makeText(this, "音乐文件未找到。", 2000).show();
+		}
 		mp = new MediaPlayer();
 		try {
-			mp.setDataSource(this, Uri.fromFile(tmpMidiFile));
+			mp.setDataSource(fis.getFD());
 			mp.prepare();
 			mp.setLooping(true);
 			mp.setWakeMode(MusicService.this, PowerManager.PARTIAL_WAKE_LOCK);
-//			  mp.setWakeMode(this.getBaseContext(), PowerManager.PARTIAL_WAKE_LOCK);
+			// mp.setWakeMode(this.getBaseContext(),
+			// PowerManager.PARTIAL_WAKE_LOCK);
 			mp.start();
-			timer.schedule(new TimerTask() {
+			final long startAccr = System.currentTimeMillis();
+			timer.scheduleAtFixedRate(new TimerTask() {
 
 				@Override
 				public void run() {
-					if (mp != null & mp.isPlaying()) {
-						Log.i(TAG, "Stop the player inside the music service.");
-						mp.stop();
+					final long nowAccr = System.currentTimeMillis();
+					if ((nowAccr - startAccr) >= MusicFragment.musicDuration) { //stop
+						if (mp != null & mp.isPlaying()) {
+							Log.i(TAG,
+									"Stop the player inside the music service.");
+							mp.stop();
+						}
 					}
 				}
 
-			}, MusicFragment.musicDuration);
+			}, 0, 1000);
 		} catch (IOException e) {
 			Log.e(TAG, "Error playing music", e);
 			Toast.makeText(this, "无法播放", 5 * 1000);
