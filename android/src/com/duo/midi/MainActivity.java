@@ -60,6 +60,14 @@ public class MainActivity extends FragmentActivity {
 				}
 			}
 		});
+
+		// check version.
+		try {
+			new UpgradeChecker(this).execute();
+		} catch (Exception e) {
+
+		}
+
 	}
 
 	class DuosuccessAdapter extends FragmentStatePagerAdapter {
