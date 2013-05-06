@@ -242,9 +242,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		settings.setPluginsEnabled(true);
 		settings.setUseWideViewPort(true);
 		settings.setSupportZoom(true);
-//		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-//		this.setObjectParam(settings, "setLoadWithOverviewMode", false);
-//		this.setObjectParam(settings, "setDisplayZoomControls", false);
+		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+		this.setObjectParam(settings, "setLoadWithOverviewMode", false);
+		this.setObjectParam(settings, "setDisplayZoomControls", false);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
 		webView.setOnTouchListener(new OnTouchListener() {
