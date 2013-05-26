@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -53,8 +54,8 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	private static final int CLICK_ON_WEBVIEW = 1;
 
 	private static final String homeUrl = "http://www.duosuccess.com";
-//	 private static final String homeUrl =
-//	 "http://rick-li.github.io/android-midi/index.html";
+	// private static final String homeUrl =
+	// "http://rick-li.github.io/android-midi/index.html";
 	// private static final String homeUrl = "http://www.baidu.com";
 	private String strBaseDir = Environment.getExternalStorageDirectory()
 			.getPath() + "/duosuccess";
@@ -73,9 +74,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	public static int musicDuration = 1 * 60 * 60 * 1000;
 	public static int waitAddition = 10 * 60 * 1000;
 
-//	 public static int waitInterval = 10 * 1000;
-//	 public static int waitAddition = 6 * 1000;
-//	 public static int musicDuration = 10 * 1000;
+	// public static int waitInterval = 10 * 1000;
+	// public static int waitAddition = 6 * 1000;
+	// public static int musicDuration = 10 * 1000;
 
 	enum STATE {
 		stop {
@@ -168,6 +169,21 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			}
 
 		});
+
+		if (Build.VERSION.SDK_INT < 14) {
+			actionBar.addAction(new Action() {
+
+				@Override
+				public int getDrawable() {
+					return R.drawable.full_screen;
+				}
+
+				@Override
+				public void performAction(View view) {
+					goFullScreen();
+				}
+			});
+		}
 		actionBar.addAction(new Action() {
 
 			@Override
@@ -204,12 +220,12 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			@Override
 			public void performAction(View view) {
 				actionBar.setProgressBarVisibility(View.VISIBLE);
-				handler.post(new Runnable(){
+				handler.post(new Runnable() {
 
 					@Override
 					public void run() {
 						webView.reload();
-						
+
 					}
 				});
 			}
@@ -237,24 +253,27 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
 		WebView.enablePlatformNotifications();
-		 settings.setDefaultZoom(ZoomDensity.CLOSE);
-		settings.setBuiltInZoomControls(true);
+		webView.requestFocusFromTouch();
 		settings.setPluginsEnabled(true);
+		settings.setJavaScriptCanOpenWindowsAutomatically(true);
+		settings.setDefaultZoom(ZoomDensity.CLOSE);
+		settings.setBuiltInZoomControls(true);
 		settings.setUseWideViewPort(true);
 		settings.setSupportZoom(true);
 		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 		this.setObjectParam(settings, "setLoadWithOverviewMode", false);
 		this.setObjectParam(settings, "setDisplayZoomControls", false);
-		settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
 		webView.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				boolean consumed = webView.onTouchEvent(event);
+				Log.e(TAG, "Webview Touched.");
 				if (MotionEvent.ACTION_UP == event.getAction()) {
+					Log.e(TAG, "UP.");
 					handler.sendEmptyMessage(CLICK_ON_WEBVIEW);
 				}
+				boolean consumed = webView.onTouchEvent(event);
 				return consumed;
 			}
 		});
@@ -298,6 +317,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
 				// Avoid music to auto stop;
+				// webView.loadUrl("javascript:document.getElementsByTagName('head')[0].appendChild('<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1\">');");
 				webView.loadUrl("javascript:window.stopmusic = function(){}");
 				webView.loadUrl("javascript:midiExtractor.extract(document.querySelector('embed').src, window.location.href);");
 				actionBar.setProgressBarVisibility(View.INVISIBLE);
@@ -321,8 +341,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 							+ "/" + midiFile;
 				}
 				Log.i(TAG, "midi is " + midiUrl);
-//				pd = ProgressDialog.show(MusicFragment.this.getActivity(), "",
-//						"请稍侯");
+				// pd = ProgressDialog.show(MusicFragment.this.getActivity(),
+				// "",
+				// "请稍侯");
 				Toast.makeText(getActivity(), "准备下载音乐", 3000).show();
 				clearCache();
 				try {
@@ -340,9 +361,10 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 					URLConnection cn = new URL(midiUrl).openConnection();
 					InputStream stream = cn.getInputStream();
 					byte[] buffer = new byte[1024];
-					
+
 					Activity activity = getActivity();
-					FileOutputStream fos = activity.openFileOutput(tmpMidiFile, Activity.MODE_PRIVATE);
+					FileOutputStream fos = activity.openFileOutput(tmpMidiFile,
+							Activity.MODE_PRIVATE);
 					int n = -1;
 					while ((n = stream.read(buffer)) != -1) {
 						fos.write(buffer, 0, n);
@@ -350,7 +372,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 					fos.close();
 					stream.close();
 					setFooterText("下载完成");
-					//pd.dismiss();
+					// pd.dismiss();
 					playMusic();
 
 				} catch (Exception e) {
@@ -479,13 +501,13 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		});
 		String[] fileAry = this.getActivity().fileList();
 		List<String> fileList = Arrays.asList(fileAry);
-		if(fileList.contains(tmpMidiFile)){
-			if(this.getActivity().deleteFile(tmpMidiFile)){
+		if (fileList.contains(tmpMidiFile)) {
+			if (this.getActivity().deleteFile(tmpMidiFile)) {
 				Log.i(TAG, "Successfully cleared cache.");
 				Toast.makeText(this.getActivity(), "已经清除缓存音乐", 2000).show();
 			}
 		}
-		
+
 	}
 
 	private void stopMusicService() {
@@ -494,7 +516,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			Intent i = new Intent(this.getActivity(), MusicService.class);
 			this.getActivity().stopService(i);
 		} catch (Exception e) {
-			
+
 		}
 	}
 
@@ -584,10 +606,13 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		return this.waitTimer;
 	}
 
+	boolean isInFullScreen = false;
+
 	private void quitFullScreen() {
 		actionBar.setVisibility(View.VISIBLE);
 		footer.setVisibility(View.VISIBLE);
 		quitFullScreenBar.setVisibility(View.GONE);
+		isInFullScreen = false;
 	}
 
 	private void goFullScreen() {
@@ -597,6 +622,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		actionBar.setVisibility(View.GONE);
 		footer.setVisibility(View.GONE);
 		quitFullScreenBar.setVisibility(View.VISIBLE);
+		isInFullScreen = true;
 
 	}
 

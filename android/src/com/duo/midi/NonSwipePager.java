@@ -9,18 +9,22 @@ public class NonSwipePager extends ViewPager {
 
 	public NonSwipePager(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public NonSwipePager(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// Never allow swiping to switch between pages
 		return false;
 	}
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent arg0) {
+		return false;
+	}
+	
+	
 
 }

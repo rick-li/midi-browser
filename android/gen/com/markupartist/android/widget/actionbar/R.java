@@ -49,7 +49,7 @@ public final class R {
 	}
 	public static final class drawable {
 		public static final int actionbar_back_indicator = 0x7f020000;
-		public static final int icon = 0x7f020010;
+		public static final int icon = 0x7f020011;
 		public static final int actionbar_btn_pressed = 0x7f020004;
 		public static final int actionbar_btn_normal = 0x7f020003;
 		public static final int actionbar_btn = 0x7f020002;

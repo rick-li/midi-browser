@@ -162,4 +162,7 @@ pip-log.txt
 .DS_Store
 
 #android
-gen
+android/gen/
+android/bin/
+gen/
+bin/
