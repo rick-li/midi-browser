@@ -35,7 +35,8 @@
 
 
 //NSString *homeUrl=@"http://duosuccess.com/tcm/001a01080301b01aj.htm";
-NSString *homeUrl = @"http://www.duosuccess.com/";
+//NSString *homeUrl = @"http://www.duosuccess.com/";
+NSString *homeUrl = @"http://69.195.73.224/";
 //NSString *homeUrl = @"http://rick-li.github.com/android-midi/test2.html";
 //NSString *homeUrl = @"http://10.114.191.51/midi/test2.html";
 //NSString *homeUrl = @"http://li-ricks-macbook.local/~lirick/test.html";
