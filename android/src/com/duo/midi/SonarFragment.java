@@ -23,7 +23,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.duosuccess.midi.R;
+import com.duosuccess.sonar.R;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 
@@ -75,7 +75,7 @@ public class SonarFragment extends Fragment {
 			public void performAction(View view) {
 				sonarWebView.reload();
 				initialzied = true;
-				startLocationService();
+				//startLocationService();
 			}
 		});
 		init();
@@ -95,6 +95,7 @@ public class SonarFragment extends Fragment {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				super.onPageFinished(view, url);
+				startLocationService();
 			}
 		});
 		sonarWebView.loadUrl(SONAR_URL);

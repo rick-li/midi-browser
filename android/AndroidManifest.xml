@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.duosuccess.midi"
-    android:versionCode="6"
-    android:versionName="1.2.3" >
+    package="com.duosuccess.sonar"
+    android:versionCode="1"
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -56,6 +56,7 @@
             </intent-filter>
         </activity>
 
+        <!-- 
         <receiver android:name="com.duo.midi.alarm.AlarmReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -68,6 +69,7 @@
 
         <service android:name="com.duo.midi.music.MusicWakeService" >
         </service>
+         -->
     </application>
 
 </manifest>
