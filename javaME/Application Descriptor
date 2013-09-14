@@ -1,0 +1,7 @@
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: 多成中医
+MIDlet-Jar-URL: midi-browser.jar
+MicroEdition-Configuration: CLDC-1.0
+MicroEdition-Profile: MIDP-1.0
+MIDlet-1: midiBrowser,/icon.gif,gr.fire.test.MidiBrowser
+MIDlet-Name: 多成音乐浏览器
