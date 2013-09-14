@@ -41,7 +41,8 @@ h1 {
 		var today = new Date();
 		var mon = today.getMonth();
 		mon++;
-		mon = mon+1<10?'0'+mon:mon;
+		//append '0' to single digit '9->09;8->08....'
+		mon = mon+1<=10?'0'+mon:mon;
 		var d = today.getDate();
 		d = d < 10 ? '0' + d : d;
 		var key = mon+'/'+d;
