@@ -53,7 +53,8 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 
 	private static final int CLICK_ON_WEBVIEW = 1;
 
-	private static final String homeUrl = "http://www.duosuccess.com";
+//	private static final String homeUrl = "https://www.duosuccess.com";
+	private static final String homeUrl = "http://69.195.73.224";
 	// private static final String homeUrl =
 	// "http://rick-li.github.io/android-midi/index.html";
 	// private static final String homeUrl = "http://www.baidu.com";
