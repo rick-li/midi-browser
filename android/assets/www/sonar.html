@@ -35,7 +35,7 @@ h1 {
 		var today = new Date();
 		var mon = today.getMonth();
 		mon++;
-		mon = mon+1<10?'0'+mon:mon;
+		mon = mon+1<=10?'0'+mon:mon;
 		var d = today.getDate();
 		d = d < 10 ? '0' + d : d;
 		var key = mon+'/'+d;
