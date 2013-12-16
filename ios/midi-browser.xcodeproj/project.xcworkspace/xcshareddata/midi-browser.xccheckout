@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4E375775-9980-4B55-8427-28CA7B1020D1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>midi-browser</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2DEA1D22-D1C9-429A-B5B7-902361D5AF98</key>
+		<string>https://github.com/rick-li/midi-browser.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/midi-browser.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2DEA1D22-D1C9-429A-B5B7-902361D5AF98</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/rick-li/midi-browser.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2DEA1D22-D1C9-429A-B5B7-902361D5AF98</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2DEA1D22-D1C9-429A-B5B7-902361D5AF98</string>
+			<key>IDESourceControlWCCName</key>
+			<string>midi-browser</string>
+		</dict>
+	</array>
+</dict>
+</plist>

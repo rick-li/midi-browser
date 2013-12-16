@@ -53,7 +53,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 
 	private static final int CLICK_ON_WEBVIEW = 1;
 
-	private static final String homeUrl = "http://www.duosuccess.com";
+	private static final String homeUrl = "http://69.195.73.224";
 	// private static final String homeUrl =
 	// "http://rick-li.github.io/android-midi/index.html";
 	// private static final String homeUrl = "http://www.baidu.com";
@@ -252,9 +252,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		webView = (WebView) this.getView().findViewById(R.id.webView);
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
-		WebView.enablePlatformNotifications();
+//		WebView.enablePlatformNotifications();
 		webView.requestFocusFromTouch();
-		settings.setPluginsEnabled(true);
+//		settings.setPluginsEnabled(true);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
 		settings.setDefaultZoom(ZoomDensity.CLOSE);
 		settings.setBuiltInZoomControls(true);
@@ -285,15 +285,24 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				Log.i(TAG, "Page started " + url);
+				if(url.contains("/shop/") && url.startsWith("http:")){
+					url = url.replace("http:", "https:");
+					url = url.replace("69.195.73.224", "www.duosuccess.com");
+					Log.i(TAG, "new url is "+url);
+				
+				}
 				fullscreenLocked = false;
 				try {
-					pd = ProgressDialog.show(MusicFragment.this.getActivity(),
-							"", "页面加载，请稍侯");
+					actionBar.setProgressBarVisibility(View.VISIBLE);
+//					pd = ProgressDialog.show(MusicFragment.this.getActivity(),
+//							"", "页面加载，请稍侯");
 					new Timer().schedule(new TimerTask() {
 
 						@Override
 						public void run() {
-							pd.dismiss();
+							if(pd!=null){
+								pd.dismiss();
+							}
 						}
 
 					}, 30 * 1000);
@@ -308,9 +317,18 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				Log.i(TAG, "Should overrid " + url);
 				// handler.sendEmptyMessage(CLICK_ON_URL);
-				view.loadUrl(url);
 				stopMedia();
-				return true;
+				if(url.contains("/shop/") && url.startsWith("http:")){
+					url = url.replace("http:", "https:");
+					url = url.replace("69.195.73.224", "www.duosuccess.com");
+					
+					Log.i(TAG, "new url is "+url);
+					view.loadUrl(url); 
+					return true;
+				}
+
+				
+				return false;
 			}
 
 			@Override
@@ -321,14 +339,16 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 				webView.loadUrl("javascript:window.stopmusic = function(){}");
 				webView.loadUrl("javascript:midiExtractor.extract(document.querySelector('embed').src, window.location.href);");
 				actionBar.setProgressBarVisibility(View.INVISIBLE);
-				pd.dismiss();
+//				pd.dismiss();
 			}
 
 			@Override
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
 				super.onReceivedError(view, errorCode, description, failingUrl);
-				pd.dismiss();
+				if(pd!=null){
+					pd.dismiss();
+				}
 			}
 		});
 

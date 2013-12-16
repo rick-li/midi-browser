@@ -86,7 +86,7 @@ public class SonarFragment extends Fragment {
 
 		WebSettings settings = sonarWebView.getSettings();
 		settings.setJavaScriptEnabled(true);
-		WebView.enablePlatformNotifications();
+//		WebView.enablePlatformNotifications();
 		settings.setBuiltInZoomControls(true);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
 
