@@ -57,6 +57,7 @@ abstract public class WakefulIntentService extends IntentService {
 
 	public static void sendWakefulWork(Context ctxt, Intent i) {
 		getLock(ctxt.getApplicationContext()).acquire();
+        getWifiLock(ctxt.getApplicationContext()).acquire();
 		ctxt.startService(i);
 	}
 

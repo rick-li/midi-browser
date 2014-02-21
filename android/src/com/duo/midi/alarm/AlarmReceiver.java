@@ -31,6 +31,7 @@ import android.content.res.XmlResourceParser;
 import android.util.Log;
 
 import com.duo.midi.alarm.WakefulIntentService.AlarmListener;
+import com.duo.midi.music.MusicRepeatListener;
 
 public class AlarmReceiver extends BroadcastReceiver {
   private static final String WAKEFUL_META_DATA="com.commonsware.cwac.wakeful";
@@ -56,50 +57,9 @@ public class AlarmReceiver extends BroadcastReceiver {
       }
     }
   }
-  
+  static MusicRepeatListener musicRepeatListener = new MusicRepeatListener();
   @SuppressWarnings("unchecked")
   private WakefulIntentService.AlarmListener getListener(Context ctxt) {
-    PackageManager pm=ctxt.getPackageManager();
-    ComponentName cn=new ComponentName(ctxt, getClass());
-    
-    try {
-      ActivityInfo ai=pm.getReceiverInfo(cn,
-                                         PackageManager.GET_META_DATA);
-      XmlResourceParser xpp=ai.loadXmlMetaData(pm,
-                                               WAKEFUL_META_DATA);
-      
-      while (xpp.getEventType()!=XmlPullParser.END_DOCUMENT) {
-        if (xpp.getEventType()==XmlPullParser.START_TAG) {
-          if (xpp.getName().equals("WakefulIntentService")) {
-            String clsName=xpp.getAttributeValue(null, "listener");
-            Class<AlarmListener> cls=(Class<AlarmListener>)Class.forName(clsName);
-            
-            return(cls.newInstance());
-          }
-        }
-        
-        xpp.next();
-      }
-    }
-    catch (NameNotFoundException e) {
-      throw new RuntimeException("Cannot find own info???", e);
-    }
-    catch (XmlPullParserException e) {
-      throw new RuntimeException("Malformed metadata resource XML", e);
-    }
-    catch (IOException e) {
-      throw new RuntimeException("Could not read resource XML", e);
-    }
-    catch (ClassNotFoundException e) {
-      throw new RuntimeException("Listener class not found", e);
-    }
-    catch (IllegalAccessException e) {
-      throw new RuntimeException("Listener is not public or lacks public constructor", e);
-    }
-    catch (InstantiationException e) {
-      throw new RuntimeException("Could not create instance of listener", e);
-    }
-    
-    return(null);
+    return musicRepeatListener;
   }
 }

@@ -244,6 +244,11 @@
 			attributes = {
 				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = duosuccess;
+				TargetAttributes = {
+					7EC22F8B161033D700D55D41 = {
+						DevelopmentTeam = MM2B8W94AH;
+					};
+				};
 			};
 			buildConfigurationList = 7EC22F86161033D700D55D41 /* Build configuration list for PBXProject "midi-browser" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -390,15 +395,15 @@
 		7EC22FAB161033D700D55D41 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test/midi-browser-Prefix.pch";
 				INFOPLIST_FILE = "test/midi-browser-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "midi-browser";
-				PROVISIONING_PROFILE = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F7A763E-19A8-4476-B113-D3C584F1AB19";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -408,15 +413,15 @@
 		7EC22FAC161033D700D55D41 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Zheng Jonathan";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zheng Jonathan";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test/midi-browser-Prefix.pch";
 				INFOPLIST_FILE = "test/midi-browser-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "midi-browser";
-				PROVISIONING_PROFILE = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0F48856F-B46C-41C1-B6A0-DF1D6A0F42E6";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F7A763E-19A8-4476-B113-D3C584F1AB19";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

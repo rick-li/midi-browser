@@ -1,5 +1,10 @@
 package com.duo.midi;
 
+import java.util.List;
+import java.util.Map;
+
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -11,6 +16,14 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
 import com.duosuccess.midi.R;
+import com.google.common.collect.ImmutableMap;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MainActivity extends FragmentActivity {
@@ -23,6 +36,35 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		Parse.initialize(this, "L8yb6OqqvqHZhwViBea5xCWAgtRtow0R3CtDjz1E", "KmDVN8meSLM9QjYE5wsrbVMtmWpbLo0MYxpAFFCR");
+		final String installationId = ParseInstallation.getCurrentInstallation().getInstallationId();
+		ParseAnalytics.trackAppOpened(this.getIntent());
+		
+
+		final Map<String, String> logDetail = ImmutableMap.<String, String>builder().put("installId", installationId)
+				.put("appVersion", getAppVersion())
+				.put("androidVersion", android.os.Build.VERSION.RELEASE)
+				.build();
+		ParseAnalytics.trackEvent("App Open", logDetail);
+		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("AndroidInstallation");
+		query.whereEqualTo("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
+		query.findInBackground(new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> results, ParseException e) {
+				ParseObject installObj;
+				if(results.size()<=0){
+					installObj = new ParseObject("AndroidInstallation");
+					installObj.put("installationId", installationId);
+				}else{
+					installObj = results.get(0);
+				}
+				installObj.put("appVersion", getAppVersion());
+				installObj.put("androidVersion", android.os.Build.VERSION.RELEASE);
+				installObj.saveInBackground();
+			}
+		});
+		
 		Settings.System.putInt(getContentResolver(),
 				Settings.System.WIFI_SLEEP_POLICY,
 				Settings.System.WIFI_SLEEP_POLICY_NEVER);
@@ -68,6 +110,17 @@ public class MainActivity extends FragmentActivity {
 
 		}
 
+	}
+	
+	private String getAppVersion(){
+		try {
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			return pInfo.versionName;
+			
+		} catch (NameNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		return "0";
 	}
 
 	class DuosuccessAdapter extends FragmentStatePagerAdapter {

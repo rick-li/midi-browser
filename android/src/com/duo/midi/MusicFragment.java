@@ -1,9 +1,6 @@
 package com.duo.midi;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -12,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,7 +19,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -44,8 +41,10 @@ import android.widget.Toast;
 import com.duo.midi.alarm.WakefulIntentService;
 import com.duo.midi.music.MusicRepeatListener;
 import com.duosuccess.midi.R;
+import com.google.common.collect.ImmutableMap;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
+import com.parse.ParseAnalytics;
 
 public class MusicFragment extends Fragment implements Handler.Callback {
 	private static final String TAG = "midi-browser";
@@ -57,8 +56,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	// private static final String homeUrl =
 	// "http://rick-li.github.io/android-midi/index.html";
 	// private static final String homeUrl = "http://www.baidu.com";
-	private String strBaseDir = Environment.getExternalStorageDirectory()
-			.getPath() + "/duosuccess";
+	
 	private String tmpMidiFile = "duo-music.mid";
 	public static WebView webView;
 	private Timer musicTimer;
@@ -74,9 +72,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	public static int musicDuration = 1 * 60 * 60 * 1000;
 	public static int waitAddition = 10 * 60 * 1000;
 
-	// public static int waitInterval = 10 * 1000;
-	// public static int waitAddition = 6 * 1000;
-	// public static int musicDuration = 10 * 1000;
+//	public static int waitInterval = 10 * 1000;
+//	public static int waitAddition = 6 * 1000;
+//	public static int musicDuration = 10 * 1000;
 
 	enum STATE {
 		stop {
@@ -118,27 +116,8 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		return view;
 	}
 
-	File logFile;
-
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		Log.i(TAG, "Checking baseDir " + strBaseDir);
-		File dir = new File(strBaseDir);
-		if (!dir.exists()) {
-			Log.i(TAG, "base dir " + strBaseDir + " not exist, create new. ");
-			dir.mkdir();
-		}
-		String logFileName = "duosuccess.log";
-		String strLogFile = this.strBaseDir + "/" + logFileName;
-		logFile = new File(strLogFile);
-		if (!logFile.exists()) {
-			try {
-				logFile.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
 		handler = new Handler(this);
 		actionBar = (ActionBar) this.getView().findViewById(R.id.actionbar);
 
@@ -197,6 +176,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 						.findViewById(R.id.actionbar_item);
 				needRepeat = !needRepeat;
 				if (needRepeat) {
+					ParseAnalytics.trackEvent("User set repeat");
 					labelView.setImageResource(R.drawable.ic_menu_rotate);
 					Toast.makeText(MusicFragment.this.getActivity(),
 							"设定为每隔一小时播放", 1000).show();
@@ -252,7 +232,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		webView = (WebView) this.getView().findViewById(R.id.webView);
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
-//		WebView.enablePlatformNotifications();
+		WebView.enablePlatformNotifications();
 		webView.requestFocusFromTouch();
 //		settings.setPluginsEnabled(true);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -262,7 +242,10 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		settings.setSupportZoom(true);
 		settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 		this.setObjectParam(settings, "setLoadWithOverviewMode", false);
-		this.setObjectParam(settings, "setDisplayZoomControls", false);
+		if (Build.VERSION.SDK_INT < 14) {
+			this.setObjectParam(settings, "setDisplayZoomControls", false);
+		}
+		
 
 		webView.setOnTouchListener(new OnTouchListener() {
 
@@ -309,6 +292,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 					stopMedia();
 				} catch (Exception e) {
 					Log.e(TAG, "Error stop music", e);
+					ParseAnalytics.trackEvent("Error stop music");
 				}
 				super.onPageStarted(view, url, favicon);
 			}
@@ -353,6 +337,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		});
 
 		class MidiExtractor {
+			@SuppressWarnings("unused")
 			public void extract(String midiFile, String pageUrl) {
 				Log.i(TAG, "pageUrl is " + pageUrl);
 				String midiUrl = midiFile;
@@ -361,9 +346,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 							+ "/" + midiFile;
 				}
 				Log.i(TAG, "midi is " + midiUrl);
-				// pd = ProgressDialog.show(MusicFragment.this.getActivity(),
-				// "",
-				// "请稍侯");
+				final Map<String, String> logDetail = ImmutableMap.<String, String>builder().put("midi", midiUrl).build();
+				ParseAnalytics.trackEvent("Prepare download midi.", logDetail);
+				
 				Toast.makeText(getActivity(), "准备下载音乐", 3000).show();
 				clearCache();
 				try {
@@ -373,15 +358,13 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 						public void run() {
 							fullscreenLocked = true;
 							quitFullScreen();
-
 						}
 
 					});
 					setFooterText("正在下载音乐");
 					URLConnection cn = new URL(midiUrl).openConnection();
 					InputStream stream = cn.getInputStream();
-					byte[] buffer = new byte[1024];
-
+					byte[] buffer = new byte[512];
 					Activity activity = getActivity();
 					FileOutputStream fos = activity.openFileOutput(tmpMidiFile,
 							Activity.MODE_PRIVATE);
@@ -389,17 +372,25 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 					while ((n = stream.read(buffer)) != -1) {
 						fos.write(buffer, 0, n);
 					}
-					fos.close();
 					stream.close();
+					fos.close();
+					ParseAnalytics.trackEvent("Download midi Successful.");
 					setFooterText("下载完成");
 					// pd.dismiss();
-					playMusic();
+					
 
 				} catch (Exception e) {
-					logToFile(new Date().toString() + " Unable to play music, "
-							+ e.getMessage());
+					
+					ParseAnalytics.trackEvent(" Unable to Download midi. ",
+							ImmutableMap.<String, String>builder().put("msg", e.getMessage()).build());
 					Log.e(TAG, "unable to play midi. ", e);
 					Toast.makeText(getActivity(), "无法下载音乐文件", 5000).show();
+				}
+				
+				try {
+					playMusic();
+				} catch (Exception e) {
+					ParseAnalytics.trackEvent(" Unable to play music, ", ImmutableMap.<String, String>builder().put("msg", e.getMessage()).build());
 				}
 			}
 		}
@@ -445,7 +436,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	}
 
 	private void playMusic() throws Exception {
-		logToFile(new Date().toString() + " Start play music.");
+		
 		Intent i = new Intent(this.getActivity(), MusicService.class);
 		i.putExtra("midiFile", this.tmpMidiFile);
 		this.getActivity().startService(i);
@@ -524,6 +515,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		if (fileList.contains(tmpMidiFile)) {
 			if (this.getActivity().deleteFile(tmpMidiFile)) {
 				Log.i(TAG, "Successfully cleared cache.");
+				ParseAnalytics.trackEvent("Cache clear successful.");
 				Toast.makeText(this.getActivity(), "已经清除缓存音乐", 2000).show();
 			}
 		}
@@ -564,25 +556,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 
 	@Override
 	public void onDestroy() {
-		FileWriter fw = null;
-		try {
-			fw = new FileWriter(logFile);
-			fw.write(this.strlogs);
-			fw.flush();
-		} catch (IOException e) {
-			Log.e(TAG, "io error", e);
-		} finally {
-			if (fw != null) {
-				try {
-					fw.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
 		Log.i(TAG, "cancel alarms.");
-		this.logToFile("cancel alarms.");
 		WakefulIntentService.cancelAlarms(this.getActivity());
 		super.onDestroy();
 	}
@@ -605,9 +579,6 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		return needRepeat;
 	}
 
-	public void setNeedRepeat(boolean needRepeat) {
-		this.needRepeat = needRepeat;
-	}
 
 	public void stopWaitTimer() {
 		if (waitTimer != null) {
@@ -632,6 +603,10 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		actionBar.setVisibility(View.VISIBLE);
 		footer.setVisibility(View.VISIBLE);
 		quitFullScreenBar.setVisibility(View.GONE);
+
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        lp.setMargins(0, 45, 0, 45);
+        webView.setLayoutParams(lp);
 		isInFullScreen = false;
 	}
 
@@ -641,6 +616,9 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		}
 		actionBar.setVisibility(View.GONE);
 		footer.setVisibility(View.GONE);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        lp.setMargins(0, 0, 0, 0);
+        webView.setLayoutParams(lp);
 		quitFullScreenBar.setVisibility(View.VISIBLE);
 		isInFullScreen = true;
 
@@ -650,7 +628,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 	public boolean handleMessage(Message msg) {
 
 		if (msg.what == CLICK_ON_WEBVIEW) {
-			Log.i(TAG, "Webview clicked.");
+			
 			goFullScreen();
 			return true;
 		}

@@ -8,16 +8,18 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.duo.midi.MainActivity;
 import com.duo.midi.MusicFragment;
 import com.duo.midi.TimeCounter;
 import com.duo.midi.alarm.WakefulIntentService;
+import com.parse.ParseAnalytics;
 
 public class MusicWakeService extends WakefulIntentService {
 	private static final String TAG = "MusicService";
 
-	// private boolean isFirstRound = true;
+
 	public MusicWakeService() {
 		super("MusicService");
 	}
@@ -27,7 +29,7 @@ public class MusicWakeService extends WakefulIntentService {
 
 	@Override
 	protected void doWakefulWork(final Context context, Intent intent) {
-		Log.i(TAG, "I'm awake! I'm awake! (yawn)");
+		
 		if (context == null) {
 			return;
 		}
@@ -46,7 +48,10 @@ public class MusicWakeService extends WakefulIntentService {
 				}
 				if (counter.getStartMillSec() == maxNetworkWaitTime) {
 					stopNetworkWaitTimer();
-					Log.e(TAG, "Unable to get network connected after sleep.");
+					Log.w(TAG, "Unable to get network connected after sleep.");
+					ParseAnalytics.trackEvent("Reception can't be awaken.");
+                    Toast.makeText(context, "手机的信号无法唤醒，可能无法播放，请使用WIFI信号.", 5*1000);
+                    restartMusic(context);
 				}
 			}
 
@@ -64,6 +69,7 @@ public class MusicWakeService extends WakefulIntentService {
 	}
 	private void restartMusic(Context context){
 		Log.i(TAG, "Restarting Music.");
+		ParseAnalytics.trackEvent("Restart Music.");
 		MainActivity activity = (MainActivity) context;
 		MusicFragment mf = activity.getMusicFragment();
 		if (mf.isNeedRepeat()) {

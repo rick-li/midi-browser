@@ -28,7 +28,7 @@ namespace sdkBackgroundAudioPlayerCS
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private String baseUrl = "http://www.duosuccess.com";
+        private String baseUrl = "https://www.duosuccess.com";
         private String midfile = "temp.mid";
         IsolatedStorageFile store;
         private String strUri = "";

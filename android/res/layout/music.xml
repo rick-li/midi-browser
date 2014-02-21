@@ -6,7 +6,10 @@
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dip"
+        android:layout_marginBottom="45dip"
+        />
 
     <com.markupartist.android.widget.ActionBar
         android:id="@+id/actionbar"
