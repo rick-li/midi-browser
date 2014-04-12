@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="多成中醫瀏覽器"><title>多成中醫瀏覽器</title><link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css"><style>#header_wrap .inner {
+  padding: 30px 10px 30px 10px;
+}
+.store img{
+  width:129px;
+  height:45px;
+}
+#main_content{
+  padding-bottom: 0px;
+  padding-top: 10px;
+}
+.section {
+  border-bottom: solid 1px;
+  margin: 20px 0;
+}
+.section .main{
+  float: left;
+  margin-right: 70px;
+  width: 316px;
+}
+#deprecated .inner{
+  margin: 0 auto;
+}
+#language{
+  padding: 10px;
+}
+.qr{
+  margin-top: 20px; 
+  width: 150px;
+  height: 150px;
+}
+.clear-fix:after
+{
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.phoneonly{
+  display:none;
+}
+@media screen and (max-width: 480px) {
+
+  .phoneonly{
+    display:inline;
+    padding-left: 25px;
+  }
+  .section .main{
+    float: none;
+    margin-right: 0px;
+    width: auto;
+  }
+  .qr{
+    display:none;
+  }
+  #header_wrap .inner{
+    padding: 13px 10px 5px 10px;
+  }
+  #deprecated .inner{
+    padding: 5px 10px;
+  }
+  #language{
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    z-index: 10;
+    color: #fff;
+    background: #0090ff;
+    padding: 10px
+    box-shadow: 0 0 10px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+}</style><script type="text/javascript">var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9cfd501af329e69f70c34f5531d3fea1' type='text/javascript'%3E%3C/script%3E"));
+
+window.onload = function(){
+
+ var langText = '切換到中文';
+ var langHref = 'zh.html';
+ if(location.href.indexOf('zh.html') != -1){
+   langText = 'Switch to English';
+   langHref = 'en.html';
+   
+ }
+ var langEl = document.getElementById('language');
+ langEl.href = langHref;
+ langEl.innerHTML = langText;
+}
+</script></head><body><!--Header--><div id="header_wrap" class="outer"><header class="inner"><a id="language" href="undefined"></a><h1 id="project_title">多成中醫瀏覽器</h1></header></div><!--Main content--><div id="main_content_wrap" class="outer"><section id="main_content" class="inner"><div class="section clear-fix"><div class="main"><h3>安卓版 1.2.5(20131218)</h3><h3><a href="files/midi-browser1.2.5.apk" onclick="javascript:_hmt.push([&quot;_trackEvent&quot;, &quot;midibrowser&quot;, &quot;download&quot;, &quot;android&quot;]);">下載 </a><a href="files/android.png" class="phoneonly">二維碼</a></h3><strong>支持2.3以上手機和平板</strong><div class="store"><a href="https://play.google.com/store/apps/details?id=com.duosuccess.midi"><img alt="get_from_google_play" src="images/play.png"></a></div></div><div class="side"><img src="files/android.png" class="desktoponly qr"></div></div><div class="section clear-fix"><div class="main"><h3>IPhone/IPad</h3><a href="files/ios.png" class="phoneonly">二維碼</a><div class="store"><a href="https://itunes.apple.com/cn/app/id812021388"><img src="images/appstore.png"></a></div><h6>或在Appstore里搜索 多成中医 或 duosuccess</h6><h6>iPad用户请在搜索时选择 “仅iPhone”, 下一个版本会有专门的iPad版</h6></div><div class="side"><img src="files/ios.png" class="desktoponly qr"></div></div><div class="section"><p><h3>谷歌插件版,支持谷歌内核的浏览器</h3><h3><a href="https://chrome.google.com/webstore/detail/duosuccess-midi-plugin/dnjeeajofjjjcodkdegpahjbchljeeml" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'chrome']);">下載</a></h3><h3><a href="files/midiExt.crx" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'chrome']);">本地下載</a></h3><strong>支持Windows, Mac, Linux 下的谷歌浏览器 以及基于谷歌内核的, 如360极速, 猎豹...</strong></p></div><div class="section"><p><h3>Windows 谷歌瀏覽器</h3><h3><a href="http://pan.baidu.com/s/1kTx8UzH" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'windows']);">下載</a></h3><h6>無需安裝，解壓即用</h6></p></div></section><section id="deprecated"><div class="inner"><h2>以下版本即將停止維護</h2><div class="section"><p><h3>Windows 火狐瀏覽器</h3><h3><a href="https://skydrive.live.com/redir?resid=CF632F96102640A8!291&amp;authkey=!AP6chUUAsMKCdoM&amp;ithint=file%2c.zip" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'windows']);">下載</a></h3><h6>请卸载之前的quicktime, 然后安装 包里的 qt_lite_410</h6><h6>在quicktime的 MIME 设置中，确保打开了Audio 下的 Midi<strong><a href="images/qtmime.png">設置說明</a></strong></h6><h6> 请用谷歌插件或者浏览器替代</h6></p></div><div class="section"><p><h3>MAC版</h3><h3><a href="files/midi-browser-mac.zip" onlick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'mac']);">下載</a></h3><h6>OSX10.8开始，Safari浏览器无法播放midi, 可以用这个浏览器替代</h6></p></div><div class="section"><p><h3>JAVA手機版</h3><h3><a href="files/midi-browser-java.zip" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'JavaME-desktop']);">下載</a></h3><strong>支持諾基亞等有JAVA功能的手機</strong></p></div><div class="section"><p><h3>IPHONE/IPAD 旧版</h3><h3><a href="itms-services://?action=download-manifest&amp;url=http://www.sicpc.com/midi-browser/midi-browser.plist" onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'ios']);">下載</a><a href="images/qr_sicpc.png"></a></h3><h6>支持ios6.0以上手機和平板, 請使用AppStore版本替代</h6></p></div></div></section><div id="footer_wrap" class="outer"><footer class="inner"><p>联系方式<a href="mailto:racke1983cn@gmail.com?Subject=MidiBrowser">racke1983cn@gmail.com</a></p><p class="copyright">多成中醫瀏覽器 maintained by Rick Li</p></footer></div></div></body></html>

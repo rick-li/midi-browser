@@ -1,0 +1,220 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport',content='width=device-width, initial-scale=1, maximum-scale=1')
+    meta(name='description', content="#{desc}")
+    title #{desc}
+    link(rel='stylesheet' type='text/css' href='stylesheets/stylesheet.css')
+    style.
+      #header_wrap .inner {
+        padding: 30px 10px 30px 10px;
+      }
+      .store img{
+        width:129px;
+        height:45px;
+      }
+      #main_content{
+        padding-bottom: 0px;
+        padding-top: 10px;
+      }
+      .section {
+        border-bottom: solid 1px;
+        margin: 20px 0;
+      }
+      .section .main{
+        float: left;
+        margin-right: 70px;
+        width: 316px;
+      }
+      #deprecated .inner{
+        margin: 0 auto;
+      }
+      #language{
+        padding: 10px;
+      }
+      .qr{
+        margin-top: 20px; 
+        width: 150px;
+        height: 150px;
+      }
+      .clear-fix:after
+      {
+          content: ".";
+          display: block;
+          clear: both;
+          visibility: hidden;
+          line-height: 0;
+          height: 0;
+      }
+      .phoneonly{
+        display:none;
+      }
+      @media screen and (max-width: 480px) {
+        
+        .phoneonly{
+          display:inline;
+          padding-left: 25px;
+        }
+        .section .main{
+          float: none;
+          margin-right: 0px;
+          width: auto;
+        }
+        .qr{
+          display:none;
+        }
+        #header_wrap .inner{
+          padding: 13px 10px 5px 10px;
+        }
+        #deprecated .inner{
+          padding: 5px 10px;
+        }
+        #language{
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 10px;
+          z-index: 10;
+          color: #fff;
+          background: #0090ff;
+          padding: 10px
+          box-shadow: 0 0 10px;
+          border-bottom-left-radius: 2px;
+          border-bottom-right-radius: 2px;
+        }
+      }
+    script(type='text/javascript').
+       var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+       document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F9cfd501af329e69f70c34f5531d3fea1' type='text/javascript'%3E%3C/script%3E"));
+
+       window.onload = function(){
+        
+        var langText = '切換到中文';
+        var langHref = 'zh.html';
+        if(location.href.indexOf('zh.html') != -1){
+          langText = 'Switch to English';
+          langHref = 'en.html';
+
+        }
+        var langEl = document.getElementById('language');
+        langEl.href = langHref;
+        langEl.innerHTML = langText;
+       }
+
+  body
+    //Header
+    
+    #header_wrap.outer
+      header.inner
+        a#language(href='#{langHref}').
+          #{langText}
+        h1#project_title= desc
+        
+
+    //Main content
+    #main_content_wrap.outer
+      section#main_content.inner
+        .section.clear-fix
+          .main
+            h3 #{android} 1.2.5(20131218)
+            h3
+              a(href='files/midi-browser1.2.5.apk', onclick='javascript:_hmt.push(["_trackEvent", "midibrowser", "download", "android"]);') #{download} 
+              
+              a.phoneonly(href='files/android.png') #{qr}
+              
+            strong #{android_desc}
+            .store
+              a(href='https://play.google.com/store/apps/details?id=com.duosuccess.midi')
+                img(alt='get_from_google_play' src='images/play.png')
+                
+          .side
+            img.desktoponly.qr(src='files/android.png')
+
+        .section.clear-fix
+          .main
+            h3 #{ios}
+            a.phoneonly(href='files/ios.png') #{qr}
+            .store
+              a(href='https://itunes.apple.com/cn/app/id812021388')
+                img(src='images/appstore.png')
+            h6 #{ios_desc1}
+            h6 #{ios_desc2}
+          .side
+            img.desktoponly.qr(src='files/ios.png')
+
+
+        .section
+          p
+            h3 #{chrome_plugin}
+            h3
+              a(href='https://chrome.google.com/webstore/detail/duosuccess-midi-plugin/dnjeeajofjjjcodkdegpahjbchljeeml' onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'chrome']);").
+                #{download}
+            h3
+              a(href='files/midiExt.crx', onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'chrome']);").
+                #{local_download}
+            strong #{chrome_plugin_desc}
+        
+        .section
+          p
+            h3 #{chrome}
+            h3
+              a(href='http://pan.baidu.com/s/1kTx8UzH', onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'windows']);").
+                #{download}
+            h6 #{chrome_desc}
+
+        
+
+      section#deprecated
+        .inner
+          h2 #{deprecated_msg}
+
+          .section
+            p
+              h3 #{firefox}
+              h3
+                a(href='https://skydrive.live.com/redir?resid=CF632F96102640A8!291&authkey=!AP6chUUAsMKCdoM&ithint=file%2c.zip' onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'windows']);").
+                  #{download}
+              h6 #{firefox_desc1}
+              h6 #{firefox_desc2}
+                strong
+                  a(href='images/qtmime.png') #{settings}
+              h6  #{firefox_desc3}
+
+          .section
+            p
+              h3 #{mac}
+              h3
+                a(href='files/midi-browser-mac.zip', onlick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'mac']);").
+                  #{download}
+              h6 #{mac_desc}
+
+          .section
+            p
+              h3 #{java}
+              h3
+                a(href="files/midi-browser-java.zip", onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'JavaME-desktop']);").
+                  #{download}
+              strong #{java_desc}
+
+          .section
+            p
+              h3 #{ios_old}
+              h3
+                a(href='itms-services://?action=download-manifest&url=http://www.sicpc.com/midi-browser/midi-browser.plist', onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'ios']);").
+                  #{download}
+                a(href='images/qr_sicpc.png')
+              h6 #{ios_old_desc}
+
+
+      #footer_wrap.outer
+        footer.inner
+          p #{contact}
+            a(href='mailto:racke1983cn@gmail.com?Subject=MidiBrowser') racke1983cn@gmail.com
+          p.copyright #{desc} maintained by Rick Li
+
+
+
+
+
+
