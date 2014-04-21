@@ -5,6 +5,7 @@ import java.util.Map;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -36,45 +37,63 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		Parse.initialize(this, "L8yb6OqqvqHZhwViBea5xCWAgtRtow0R3CtDjz1E", "KmDVN8meSLM9QjYE5wsrbVMtmWpbLo0MYxpAFFCR");
-		final String installationId = ParseInstallation.getCurrentInstallation().getInstallationId();
+		// throw an exception to test feature.
+		// String a = null;
+		// a.toString();
+		Parse.initialize(this, "L8yb6OqqvqHZhwViBea5xCWAgtRtow0R3CtDjz1E",
+				"KmDVN8meSLM9QjYE5wsrbVMtmWpbLo0MYxpAFFCR");
+		final String installationId = ParseInstallation
+				.getCurrentInstallation().getInstallationId();
 		ParseAnalytics.trackAppOpened(this.getIntent());
-		
 
-		final Map<String, String> logDetail = ImmutableMap.<String, String>builder().put("installId", installationId)
+		final Map<String, String> logDetail = ImmutableMap
+				.<String, String> builder().put("installId", installationId)
 				.put("appVersion", getAppVersion())
 				.put("androidVersion", android.os.Build.VERSION.RELEASE)
 				.build();
 		ParseAnalytics.trackEvent("App Open", logDetail);
-		
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("AndroidInstallation");
-		query.whereEqualTo("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
+
+		ParseQuery<ParseObject> query = ParseQuery
+				.getQuery("AndroidInstallation");
+		query.whereEqualTo("installationId", ParseInstallation
+				.getCurrentInstallation().getInstallationId());
 		query.findInBackground(new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> results, ParseException e) {
 				ParseObject installObj;
-				if(results.size()<=0){
+				if (results.size() <= 0) {
 					installObj = new ParseObject("AndroidInstallation");
 					installObj.put("installationId", installationId);
-				}else{
+				} else {
 					installObj = results.get(0);
 				}
 				installObj.put("appVersion", getAppVersion());
-				installObj.put("androidVersion", android.os.Build.VERSION.RELEASE);
+				installObj.put("androidVersion",
+						android.os.Build.VERSION.RELEASE);
 				installObj.saveInBackground();
 			}
 		});
-		
-		Settings.System.putInt(getContentResolver(),
-				Settings.System.WIFI_SLEEP_POLICY,
-				Settings.System.WIFI_SLEEP_POLICY_NEVER);
+
+		if (Build.VERSION.SDK_INT < 17) {
+			try {
+
+				Settings.System.putInt(getContentResolver(),
+						Settings.System.WIFI_SLEEP_POLICY,
+						Settings.System.WIFI_SLEEP_POLICY_NEVER);
+
+			} catch (Exception e) {
+				Log.w(TAG, "Unable to set sleep policy.", e);
+			}
+		}
 
 		this.setContentView(R.layout.main);
 		FragmentStatePagerAdapter adapter = new DuosuccessAdapter(
 				getSupportFragmentManager());
 
 		this.musicFragment = new MusicFragment();
+		this.musicFragment.setRetainInstance(true);
 		this.sonarFragment = new SonarFragment();
+		this.sonarFragment.setRetainInstance(true);
 
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(adapter);
@@ -111,12 +130,13 @@ public class MainActivity extends FragmentActivity {
 		}
 
 	}
-	
-	private String getAppVersion(){
+
+	private String getAppVersion() {
 		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			PackageInfo pInfo = getPackageManager().getPackageInfo(
+					getPackageName(), 0);
 			return pInfo.versionName;
-			
+
 		} catch (NameNotFoundException e1) {
 			e1.printStackTrace();
 		}

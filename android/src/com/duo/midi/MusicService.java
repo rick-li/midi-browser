@@ -1,7 +1,6 @@
 package com.duo.midi;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -9,7 +8,6 @@ import java.util.TimerTask;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
@@ -60,8 +58,6 @@ public class MusicService extends Service {
             mp.prepare();
             mp.setLooping(true);
             mp.setWakeMode(MusicService.this, PowerManager.PARTIAL_WAKE_LOCK);
-            // mp.setWakeMode(this.getBaseContext(),
-            // PowerManager.PARTIAL_WAKE_LOCK);
             mp.start();
             final long startAccr = System.currentTimeMillis();
             timer.scheduleAtFixedRate(new TimerTask() {
