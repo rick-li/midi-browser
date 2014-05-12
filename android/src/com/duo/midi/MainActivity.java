@@ -40,40 +40,45 @@ public class MainActivity extends FragmentActivity {
 		// throw an exception to test feature.
 		// String a = null;
 		// a.toString();
+
 		Parse.initialize(this, "L8yb6OqqvqHZhwViBea5xCWAgtRtow0R3CtDjz1E",
 				"KmDVN8meSLM9QjYE5wsrbVMtmWpbLo0MYxpAFFCR");
-		final String installationId = ParseInstallation
-				.getCurrentInstallation().getInstallationId();
-		ParseAnalytics.trackAppOpened(this.getIntent());
+		try {
+			final String installationId = ParseInstallation
+					.getCurrentInstallation().getInstallationId();
+			ParseAnalytics.trackAppOpened(this.getIntent());
 
-		final Map<String, String> logDetail = ImmutableMap
-				.<String, String> builder().put("installId", installationId)
-				.put("appVersion", getAppVersion())
-				.put("androidVersion", android.os.Build.VERSION.RELEASE)
-				.build();
-		ParseAnalytics.trackEvent("App Open", logDetail);
+			final Map<String, String> logDetail = ImmutableMap
+					.<String, String> builder()
+					.put("installId", installationId)
+					.put("appVersion", getAppVersion())
+					.put("androidVersion", android.os.Build.VERSION.RELEASE)
+					.build();
+			ParseAnalytics.trackEvent("App Open", logDetail);
 
-		ParseQuery<ParseObject> query = ParseQuery
-				.getQuery("AndroidInstallation");
-		query.whereEqualTo("installationId", ParseInstallation
-				.getCurrentInstallation().getInstallationId());
-		query.findInBackground(new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> results, ParseException e) {
-				ParseObject installObj;
-				if (results.size() <= 0) {
-					installObj = new ParseObject("AndroidInstallation");
-					installObj.put("installationId", installationId);
-				} else {
-					installObj = results.get(0);
+			ParseQuery<ParseObject> query = ParseQuery
+					.getQuery("AndroidInstallation");
+			query.whereEqualTo("installationId", ParseInstallation
+					.getCurrentInstallation().getInstallationId());
+			query.findInBackground(new FindCallback<ParseObject>() {
+				@Override
+				public void done(List<ParseObject> results, ParseException e) {
+					ParseObject installObj;
+					if (results == null || results.size() <= 0) {
+						installObj = new ParseObject("AndroidInstallation");
+						installObj.put("installationId", installationId);
+					} else {
+						installObj = results.get(0);
+					}
+					installObj.put("appVersion", getAppVersion());
+					installObj.put("androidVersion",
+							android.os.Build.VERSION.RELEASE);
+					installObj.saveInBackground();
 				}
-				installObj.put("appVersion", getAppVersion());
-				installObj.put("androidVersion",
-						android.os.Build.VERSION.RELEASE);
-				installObj.saveInBackground();
-			}
-		});
-
+			});
+		} catch (Exception e) {
+			Log.e(TAG, "Fail to start with parse.");
+		}
 		if (Build.VERSION.SDK_INT < 17) {
 			try {
 

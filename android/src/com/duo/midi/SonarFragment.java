@@ -40,7 +40,7 @@ public class SonarFragment extends Fragment {
 	private ProgressDialog pd;
 	private LocationClient mLocationClient;
 	private Timer locationTimer;
-	private Handler handler = new Handler();
+	private final Handler handler = new Handler();
 	private volatile boolean initialzied = false;
 
 	public BDLocationListener myListener = new MyLocationListener();
@@ -158,9 +158,10 @@ public class SonarFragment extends Fragment {
 							}
 
 						}, 30 * 1000);
-
-						locationBootstrapTimer.cancel();
-						locationBootstrapTimer = null;
+						if (locationBootstrapTimer != null) {
+							locationBootstrapTimer.cancel();
+							locationBootstrapTimer = null;
+						}
 
 					}
 
@@ -178,6 +179,7 @@ public class SonarFragment extends Fragment {
 			handleLocation(location, false);
 		}
 
+		@Override
 		public void onReceivePoi(BDLocation location) {
 			handleLocation(location, false);
 		}
@@ -214,7 +216,9 @@ public class SonarFragment extends Fragment {
 					});
 				} else {
 					Log.i(TAG, "Load from last available location:  lat-> "
-							+ settings.getString(LATITUDE, "")+ " longi-> "+settings.getString(LONGITUDE, "")+" addr: "+settings.getString(ADDR, ""));
+							+ settings.getString(LATITUDE, "") + " longi-> "
+							+ settings.getString(LONGITUDE, "") + " addr: "
+							+ settings.getString(ADDR, ""));
 					// Log.d(TAG,
 					// "javascript:window.geoPos = {'coords':{'latitude':"
 					// + locs[0]
@@ -227,7 +231,8 @@ public class SonarFragment extends Fragment {
 									+ settings.getString(LATITUDE, "")
 									+ ",'longitude':"
 									+ settings.getString(LONGITUDE, "")
-									+ ",'addr':'" + settings.getString(ADDR, "") + "'}});");
+									+ ",'addr':'"
+									+ settings.getString(ADDR, "") + "'}});");
 					return true;
 				}
 			}
@@ -236,7 +241,10 @@ public class SonarFragment extends Fragment {
 		if (pd != null) {
 			pd.dismiss();
 		}
-		Log.i(TAG, "Location received not null " + location.getAddrStr()+ " lat: "+location.getLatitude()+ " long: "+location.getLongitude());
+		Log.i(TAG,
+				"Location received not null " + location.getAddrStr()
+						+ " lat: " + location.getLatitude() + " long: "
+						+ location.getLongitude());
 		mLocationClient.stop();
 
 		// save last available location
@@ -279,6 +287,5 @@ public class SonarFragment extends Fragment {
 	public boolean isInitialzied() {
 		return initialzied;
 	}
-
 
 }
