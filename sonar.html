@@ -162,6 +162,7 @@
         document.forms[0].longi.value = position.coords.longitude;
 
         showClock();
+        queryAddress(position);
 
         window.onload = function() {
             var options = {
@@ -180,6 +181,23 @@
             /*Construct an instance of MQA.TileMap with the options object*/
             window.map = new MQA.TileMap(options);
         }
+    }
+    window.updateAddress = function(addr) {
+        console.log('addr is ', addr);
+        var result = addr.results.length && addr.results[0];
+
+        var loc = result.locations.length && result.locations[0];
+        var strloc = [loc.adminArea1, loc.adminArea3, loc.adminArea4, loc.postalCode, loc.street].join(' , ');
+        document.getElementById('address').innerHTML = strloc;
+
+    }
+
+    function queryAddress(position) {
+
+        var src = 'http://www.mapquestapi.com/geocoding/v1/reverse?key=Fmjtd%7Cluur2g682h%2C8x%3Do5-9a8ahf&callback=updateAddress&location=' + position.coords.latitude + ',' + position.coords.longitude;
+        var jsonpTag = document.createElement('script');
+        jsonpTag.setAttribute('src', src);
+        document.body.appendChild(jsonpTag);
     }
 
     function initialize() {
