@@ -9,7 +9,7 @@
     "android_desc": "支持2.3以上手機和平板",
     "get_from_google_play": "從GOOGLE PLAY上下載",
     "ios": "IPhone/IPad",
-    "ios_desc1": "或在Appstore里搜索 多成中医 或 duosuccess",
+    "ios_desc1": "或在Itunes/AppStore里搜索 “多成中医” 或 “duosuccess”",
     "ios_desc2": "iPad用户请在搜索时选择 “仅iPhone”, 下一个版本会有专门的iPad版",
     "chrome_plugin": "谷歌插件版,支持谷歌内核的浏览器",
     "chrome_plugin_desc": "支持Windows, Mac, Linux 下的谷歌浏览器 以及基于谷歌内核的, 如360极速, 猎豹...",
@@ -26,7 +26,7 @@
     "settings": "設置說明",
     "deprecated_msg": "以下版本即將停止維護",
     "ios_old": "IPHONE/IPAD 旧版",
-    "ios_old_desc": "支持ios6.0以上手機和平板, 請使用AppStore版本替代",
+    "ios_old_desc": "支持ios6.0以上手機和平板, 請使用Itunes/AppStore版本替代",
     "contact": "联系方式"
   },
 
@@ -40,7 +40,7 @@
     "android_desc": "Supports Android 2.3+",
     "get_from_google_play": "Download from Google Play",
     "ios": "IPhone/IPad",
-    "ios_desc1": "Or Search 'duosuccess' in App Store",
+    "ios_desc1": "Or Search 'duosuccess' in Itunes/App Store",
     "ios_desc2": "For IPad, select “iPhone Only” in App Store.",
     "chrome_plugin": "Chrome Extension",
     "chrome_plugin_desc": "Support Chrome under Windows, Mac, Linux",
@@ -57,7 +57,7 @@
     "settings": "Settings",
     "deprecated_msg": "Below browsers will be removed soon",
     "ios_old": "IPHONE/IPAD OLD",
-    "ios_old_desc": "Support ios6.0+, Please use AppStore version",
+    "ios_old_desc": "Support ios6.0+, Please use Itunes/AppStore version",
     "contact": "Contact"
   }
 }
