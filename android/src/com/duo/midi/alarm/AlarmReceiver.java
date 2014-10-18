@@ -10,56 +10,34 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-*/
+ */
 
 package com.duo.midi.alarm;
 
-import java.io.IOException;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.XmlResourceParser;
 import android.util.Log;
 
 import com.duo.midi.alarm.WakefulIntentService.AlarmListener;
 import com.duo.midi.music.MusicRepeatListener;
 
 public class AlarmReceiver extends BroadcastReceiver {
-  private static final String WAKEFUL_META_DATA="com.commonsware.cwac.wakeful";
-  private static final String TAG = "AlarmReceiver";
-  @Override
-  public void onReceive(Context ctxt, Intent intent) {
-	Log.i(TAG, "AlarmReceiver onReceive.");
-    AlarmListener listener=getListener(ctxt);
-    
-    if (listener!=null) {
-      if (intent.getAction()==null) {
-        SharedPreferences prefs=ctxt.getSharedPreferences(WakefulIntentService.NAME, 0);
+	private static final String TAG = "AlarmReceiver";
 
-        prefs
-          .edit()
-          .putLong(WakefulIntentService.LAST_ALARM, System.currentTimeMillis())
-          .commit();
-        
-        listener.sendWakefulWork(ctxt);
-      }
-      else {
-        WakefulIntentService.scheduleAlarms(listener, ctxt, true);
-      }
-    }
-  }
-  static MusicRepeatListener musicRepeatListener = new MusicRepeatListener();
-  @SuppressWarnings("unchecked")
-  private WakefulIntentService.AlarmListener getListener(Context ctxt) {
-    return musicRepeatListener;
-  }
+	@Override
+	public void onReceive(Context ctxt, Intent intent) {
+		Log.i(TAG, "AlarmReceiver onReceive.");
+		AlarmListener listener = getListener(ctxt);
+
+		if (listener != null) {
+			listener.sendWakefulWork(ctxt);
+		}
+	}
+
+	static MusicRepeatListener musicRepeatListener = new MusicRepeatListener();
+
+	private WakefulIntentService.AlarmListener getListener(Context ctxt) {
+		return musicRepeatListener;
+	}
 }

@@ -19,7 +19,6 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.PowerManager;
 
@@ -57,7 +56,7 @@ abstract public class WakefulIntentService extends IntentService {
 
 	public static void sendWakefulWork(Context ctxt, Intent i) {
 		getLock(ctxt.getApplicationContext()).acquire();
-        getWifiLock(ctxt.getApplicationContext()).acquire();
+		getWifiLock(ctxt.getApplicationContext()).acquire();
 		ctxt.startService(i);
 	}
 
@@ -72,13 +71,8 @@ abstract public class WakefulIntentService extends IntentService {
 	public static void scheduleAlarms(AlarmListener listener, Context ctxt,
 			boolean force) {
 		context = ctxt;
-		SharedPreferences prefs = ctxt.getSharedPreferences(NAME, 0);
-		long lastAlarm = prefs.getLong(LAST_ALARM, 0);
 
-		if (lastAlarm == 0
-				|| force
-				|| (System.currentTimeMillis() > lastAlarm && System
-						.currentTimeMillis() - lastAlarm > listener.getMaxAge())) {
+		if (force) {
 			AlarmManager mgr = (AlarmManager) ctxt
 					.getSystemService(Context.ALARM_SERVICE);
 			Intent i = new Intent(ctxt, AlarmReceiver.class);

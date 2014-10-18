@@ -41,11 +41,11 @@ public final class R {
 		public static final int vpiUnderlinePageIndicatorStyle = 0x7f010006;
 	}
 	public static final class bool {
-		public static final int default_circle_indicator_centered = 0x7f0a0000;
-		public static final int default_circle_indicator_snap = 0x7f0a0001;
-		public static final int default_line_indicator_centered = 0x7f0a0002;
-		public static final int default_title_indicator_selected_bold = 0x7f0a0003;
-		public static final int default_underline_indicator_fades = 0x7f0a0004;
+		public static final int default_circle_indicator_centered = 0x7f090000;
+		public static final int default_circle_indicator_snap = 0x7f090001;
+		public static final int default_line_indicator_centered = 0x7f090002;
+		public static final int default_title_indicator_selected_bold = 0x7f090003;
+		public static final int default_underline_indicator_fades = 0x7f090004;
 	}
 	public static final class color {
 		public static final int default_circle_indicator_fill_color = 0x7f05000e;
@@ -93,18 +93,18 @@ public final class R {
 		public static final int vpi__tab_unselected_pressed_holo = 0x7f020018;
 	}
 	public static final class id {
-		public static final int bottom = 0x7f090003;
-		public static final int none = 0x7f090000;
-		public static final int top = 0x7f090004;
-		public static final int triangle = 0x7f090001;
-		public static final int underline = 0x7f090002;
+		public static final int bottom = 0x7f0c0003;
+		public static final int none = 0x7f0c0000;
+		public static final int top = 0x7f0c0004;
+		public static final int triangle = 0x7f0c0001;
+		public static final int underline = 0x7f0c0002;
 	}
 	public static final class integer {
-		public static final int default_circle_indicator_orientation = 0x7f0b0000;
-		public static final int default_title_indicator_footer_indicator_style = 0x7f0b0001;
-		public static final int default_title_indicator_line_position = 0x7f0b0002;
-		public static final int default_underline_indicator_fade_delay = 0x7f0b0003;
-		public static final int default_underline_indicator_fade_length = 0x7f0b0004;
+		public static final int default_circle_indicator_orientation = 0x7f0a0000;
+		public static final int default_title_indicator_footer_indicator_style = 0x7f0a0001;
+		public static final int default_title_indicator_line_position = 0x7f0a0002;
+		public static final int default_underline_indicator_fade_delay = 0x7f0a0003;
+		public static final int default_underline_indicator_fade_length = 0x7f0a0004;
 	}
 	public static final class style {
 		public static final int TextAppearance_TabPageIndicator = 0x7f080008;

@@ -26,7 +26,6 @@ import com.baidu.location.LocationClientOption;
 import com.duosuccess.midi.R;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import com.parse.ParseAnalytics;
 
 public class SonarFragment extends Fragment {
 	private static final String SONAR_URL = "file:///android_asset/www/sonar.html";
@@ -56,7 +55,7 @@ public class SonarFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		ParseAnalytics.trackEvent("User open sonar.");
+		// ParseAnalytics.trackEvent("User open sonar.");
 		View view = inflater.inflate(R.layout.sonar, null);
 		return view;
 	}
@@ -88,7 +87,7 @@ public class SonarFragment extends Fragment {
 
 		WebSettings settings = sonarWebView.getSettings();
 		settings.setJavaScriptEnabled(true);
-		WebView.enablePlatformNotifications();
+		// WebView.enablePlatformNotifications();
 		settings.setBuiltInZoomControls(true);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
 

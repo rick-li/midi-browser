@@ -10,24 +10,25 @@ import com.duo.midi.alarm.WakefulIntentService;
 
 public class MusicRepeatListener implements WakefulIntentService.AlarmListener {
 
+	@Override
 	public void scheduleAlarms(AlarmManager mgr, PendingIntent pi, Context ctxt) {
 		// Since this method will be called after the first time music is
 		// stopped, the initial waiting would be music wait interval.
-		mgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+MusicFragment.waitInterval, pi);
-//		mgr.setRepeating(
-//				AlarmManager.ELAPSED_REALTIME_WAKEUP,
-//				SystemClock.elapsedRealtime()+MusicFragment.waitInterval,
-//				(MusicFragment.musicDuration + MusicFragment.waitInterval + MusicFragment.waitAddition),
-//				pi);
-		
+
+		mgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+				SystemClock.elapsedRealtime() + MusicFragment.waitInterval
+						+ MusicFragment.waitAddition, pi);
+
 	}
 
+	@Override
 	public void sendWakefulWork(Context ctxt) {
 		WakefulIntentService.sendWakefulWork(ctxt, MusicWakeService.class);
 	}
 
+	@Override
 	public long getMaxAge() {
 		// return (AlarmManager.INTERVAL_HOUR * 2);
-		return (MusicFragment.waitInterval);
+		return (MusicFragment.waitInterval + MusicFragment.waitAddition);
 	}
 }

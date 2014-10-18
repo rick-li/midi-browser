@@ -44,7 +44,6 @@ import com.duosuccess.midi.R;
 import com.google.common.collect.ImmutableMap;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import com.parse.ParseAnalytics;
 
 public class MusicFragment extends Fragment implements Handler.Callback {
 	private static final String TAG = "midi-browser";
@@ -181,7 +180,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 				needRepeat = !needRepeat;
 				if (needRepeat) {
 					try {
-						ParseAnalytics.trackEvent("User set repeat");
+						// ParseAnalytics.trackEvent("User set repeat");
 					} catch (Exception e) {
 					}
 					labelView.setImageResource(R.drawable.ic_menu_rotate);
@@ -239,7 +238,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		webView = (WebView) this.getView().findViewById(R.id.webView);
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
-		WebView.enablePlatformNotifications();
+		// WebView.enablePlatformNotifications();
 		webView.requestFocusFromTouch();
 		// settings.setPluginsEnabled(true);
 		settings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -299,7 +298,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 					stopMedia();
 				} catch (Exception e) {
 					Log.e(TAG, "Error stop music", e);
-					ParseAnalytics.trackEvent("Error stop music");
+					// ParseAnalytics.trackEvent("Error stop music");
 				}
 				super.onPageStarted(view, url, favicon);
 			}
@@ -355,7 +354,8 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 				final Map<String, String> logDetail = ImmutableMap
 						.<String, String> builder().put("midi", midiUrl)
 						.build();
-				ParseAnalytics.trackEvent("Prepare download midi.", logDetail);
+				// ParseAnalytics.trackEvent("Prepare download midi.",
+				// logDetail);
 
 				Toast.makeText(getActivity(), "准备下载音乐", 3000).show();
 				clearCache();
@@ -382,30 +382,21 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 					}
 					stream.close();
 					fos.close();
-					try {
-						ParseAnalytics.trackEvent("Download midi Successful.");
-					} catch (Exception e) {
-					}
 					setFooterText("下载完成");
 					// pd.dismiss();
 
 				} catch (Exception e) {
 
-					ParseAnalytics.trackEvent(
-							" Unable to Download midi. ",
-							ImmutableMap.<String, String> builder()
-									.put("msg", e.getMessage()).build());
+					AVOSLogger.error("Unable to download music.");
 					Log.e(TAG, "unable to play midi. ", e);
 					Toast.makeText(getActivity(), "无法下载音乐文件", 5000).show();
 				}
 
 				try {
+
 					playMusic();
 				} catch (Exception e) {
-					ParseAnalytics.trackEvent(
-							" Unable to play music, ",
-							ImmutableMap.<String, String> builder()
-									.put("msg", e.getMessage()).build());
+					AVOSLogger.error("Unable to play music " + e.getMessage());
 				}
 			}
 		}
@@ -413,13 +404,6 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		webView.addJavascriptInterface(new MidiExtractor(), "midiExtractor");
 		webView.loadUrl(homeUrl);
 		super.onViewCreated(view, savedInstanceState);
-	}
-
-	String strlogs = "";
-
-	private void logToFile(String msg) {
-		strlogs += "\n";
-		strlogs += msg;
 	}
 
 	private void startWaitCountdown() {
@@ -485,16 +469,23 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 							WakefulIntentService.cancelAlarms(getActivity());
 						}
 
-						WakefulIntentService
-								.scheduleAlarms(new MusicRepeatListener(),
-										getActivity(), false);
+						WakefulIntentService.scheduleAlarms(
+								new MusicRepeatListener(), getActivity(), true);
 						alarmStarted = true;
 						Log.i(TAG, "Start schedule alarms.");
 
 						startWaitCountdown();
 
 					} else {
-						webView.loadUrl(homeUrl);
+						webView.post(new Runnable() {
+
+							@Override
+							public void run() {
+								webView.loadUrl(homeUrl);
+							}
+
+						});
+
 					}
 					Log.i(TAG, "music stop " + new Date().toString());
 
@@ -534,7 +525,7 @@ public class MusicFragment extends Fragment implements Handler.Callback {
 		if (fileList.contains(tmpMidiFile)) {
 			if (this.getActivity().deleteFile(tmpMidiFile)) {
 				Log.i(TAG, "Successfully cleared cache.");
-				ParseAnalytics.trackEvent("Cache clear successful.");
+				// ParseAnalytics.trackEvent("Cache clear successful.");
 				Toast.makeText(this.getActivity(), "已经清除缓存音乐", 2000).show();
 			}
 		}

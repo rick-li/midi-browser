@@ -14,11 +14,9 @@ import com.duo.midi.MainActivity;
 import com.duo.midi.MusicFragment;
 import com.duo.midi.TimeCounter;
 import com.duo.midi.alarm.WakefulIntentService;
-import com.parse.ParseAnalytics;
 
 public class MusicWakeService extends WakefulIntentService {
 	private static final String TAG = "MusicService";
-
 
 	public MusicWakeService() {
 		super("MusicService");
@@ -29,7 +27,7 @@ public class MusicWakeService extends WakefulIntentService {
 
 	@Override
 	protected void doWakefulWork(final Context context, Intent intent) {
-		
+		Log.d(TAG, "I'm Awake");
 		if (context == null) {
 			return;
 		}
@@ -41,17 +39,19 @@ public class MusicWakeService extends WakefulIntentService {
 				counter.increaseOneSec();
 				if (checkNetworkStatus()) {
 					stopNetworkWaitTimer();
-					restartMusic(context);
-				}else{
+					restartMusic(MainActivity.instance);
+				} else {
 					Log.d(TAG, "Network connection not retrieved yet, wait...");
 					return;
 				}
 				if (counter.getStartMillSec() == maxNetworkWaitTime) {
 					stopNetworkWaitTimer();
 					Log.w(TAG, "Unable to get network connected after sleep.");
-					ParseAnalytics.trackEvent("Reception can't be awaken.");
-                    Toast.makeText(context, "手机的信号无法唤醒，可能无法播放，请使用WIFI信号.", 5*1000);
-                    restartMusic(context);
+					// ParseAnalytics.trackEvent("Reception can't be awaken.");
+					Toast.makeText(context, "手机的信号无法唤醒，可能无法播放，请使用WIFI信号.",
+							5 * 1000).show();
+					;
+					restartMusic(MainActivity.instance);
 				}
 			}
 
@@ -60,24 +60,27 @@ public class MusicWakeService extends WakefulIntentService {
 		// cancel the alarm and cancel.
 
 	}
-	private void stopNetworkWaitTimer(){
-		if(networkWaitTimer!=null){
+
+	private void stopNetworkWaitTimer() {
+		if (networkWaitTimer != null) {
 			networkWaitTimer.cancel();
 			networkWaitTimer = null;
-			
+
 		}
 	}
-	private void restartMusic(Context context){
+
+	private void restartMusic(Context context) {
 		Log.i(TAG, "Restarting Music.");
-		ParseAnalytics.trackEvent("Restart Music.");
+
 		MainActivity activity = (MainActivity) context;
 		MusicFragment mf = activity.getMusicFragment();
 		if (mf.isNeedRepeat()) {
 			mf.stopWaitTimer();
 
 			mf.getWebView().reload();
-		}		
+		}
 	}
+
 	public boolean checkNetworkStatus() {
 
 		final ConnectivityManager connMgr = (ConnectivityManager) this
