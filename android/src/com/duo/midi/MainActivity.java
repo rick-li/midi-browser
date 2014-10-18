@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
 import com.duosuccess.midi.R;
-import com.testin.agent.TestinAgent;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class MainActivity extends FragmentActivity {
@@ -88,13 +87,11 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		TestinAgent.onResume(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		TestinAgent.onStop(this);
 	}
 
 	private String getAppVersion() {
