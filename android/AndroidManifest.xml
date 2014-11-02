@@ -43,7 +43,7 @@
             android:process=":remote" >
         </service>
         
-        <service android:name="com.duo.midi.MusicService"></service>
+        <service android:name="com.duo.midi.MusicService" android:priority="1000" android:persistent="true"></service>
 
         <activity
             android:name="com.duo.midi.MainActivity"

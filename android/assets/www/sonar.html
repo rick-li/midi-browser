@@ -111,6 +111,7 @@ h1 {
 		showClock();
 		alert(position['coords']['addr']);
 		document.getElementById('address').innerHTML = position['coords']['addr'];
+		document.getElementById('location').innerHTML = position['coords']['latitude']+','+position['coords']['longitude'] 
 		
 		/*
 
@@ -222,7 +223,8 @@ h1 {
 		-->
 		
 
-		您的位置: <span id="address">未知</span>.
+		<p>您的位置: <span id="address">未知</span>.</p>
+		<p>經緯度: <span id="location">未知</span>.<p>
 
 	</div>
 </body>

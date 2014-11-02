@@ -1,7 +1,14 @@
 package com.duo.midi;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.WifiLock;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +17,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.duosuccess.midi.R;
 import com.viewpagerindicator.TabPageIndicator;
@@ -21,23 +31,13 @@ public class MainActivity extends FragmentActivity {
 	SonarFragment sonarFragment = null;
 	TabPageIndicator indicator = null;
 	public static MainActivity instance = null;
+	WifiLock wifiLock;
+	public static final String BATTER_SAVE_ALERT_KEY = "batterySaveKey";
 
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		instance = this;
-
-		// if (Build.VERSION.SDK_INT < 17) {
-		// try {
-		//
-		// Settings.System.putInt(getContentResolver(),
-		// Settings.System.WIFI_SLEEP_POLICY,
-		// Settings.System.WIFI_SLEEP_POLICY_NEVER);
-		//
-		// } catch (Exception e) {
-		// Log.w(TAG, "Unable to set sleep policy.", e);
-		// }
-		// }
 
 		this.setContentView(R.layout.main);
 		FragmentStatePagerAdapter adapter = new DuosuccessAdapter(
@@ -75,13 +75,48 @@ public class MainActivity extends FragmentActivity {
 			}
 		});
 
+		wifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
+				.createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
+		wifiLock.acquire();
+
 		// check version.
 		try {
 			new UpgradeChecker(this).execute();
 		} catch (Exception e) {
-
 		}
+		batterySaveAlert();
+	}
 
+	private void batterySaveAlert() {
+		final SharedPreferences prefs = MainActivity.this
+				.getPreferences(MODE_PRIVATE);
+		if (!prefs.getBoolean(BATTER_SAVE_ALERT_KEY, true)) {
+			return;
+		}
+		AlertDialog.Builder batterySaveAlertBuilder = new AlertDialog.Builder(
+				this);
+		View alertView = View.inflate(this, R.layout.alert, null);
+		final TextView alertContentView = (TextView) alertView
+				.findViewById(R.id.alertTextContent);
+		final CheckBox alertCheckbox = (CheckBox) alertView
+				.findViewById(R.id.alertCheckbox);
+		alertContentView
+				.setText("使用華為手機得用戶，為了避免省電程序阻止播放，請做如下設置：\n 打開手機管家->省電管理->受保護的後臺應用->在多成音樂瀏覽器后打鉤, 同時設置普通省電模式。\n 使用其他省電程序的請將 多成音樂瀏覽器加入類似的白名單。");
+		batterySaveAlertBuilder.setCancelable(false).setView(alertView)
+				.setTitle("溫馨提示").setPositiveButton("好", new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+
+						if (alertCheckbox.isChecked()) {
+							prefs.edit()
+									.putBoolean(BATTER_SAVE_ALERT_KEY, false)
+									.commit();
+						}
+						dialog.dismiss();
+					}
+				});
+		batterySaveAlertBuilder.create().show();
 	}
 
 	@Override
@@ -92,6 +127,12 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		wifiLock.release();
 	}
 
 	private String getAppVersion() {

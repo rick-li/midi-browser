@@ -12,6 +12,7 @@ import com.avos.avoscloud.AVOSCloud;
 //)
 public class App extends Application {
 	public static String DEVICE_ID = "";
+	private static App instance;
 
 	@Override
 	public void onCreate() {
@@ -25,10 +26,15 @@ public class App extends Application {
 		AVOSCloud.initialize(this,
 				"5xtvwgqeg6aupmol6mb4aix1nw999yco56vspc48segcamv3",
 				"5gpbjwemyojw6s5on672xuse6glvt51jnnaha4jn2jsdwqf5");
-		AVOSLogger.info("App start");
+
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		DEVICE_ID = telephonyManager.getDeviceId();
+		AVOSLogger.info("App start");
+		instance = this;
+	}
 
+	public static App getInstance() {
+		return instance;
 	}
 
 }

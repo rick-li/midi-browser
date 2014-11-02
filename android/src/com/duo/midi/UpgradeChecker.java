@@ -10,19 +10,28 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.duosuccess.midi.R;
 
 public class UpgradeChecker extends AsyncTask<String, Void, Boolean> {
 	private static final String TAG = "UpdateChecker";
+	public static final String UPGRADE_SAVE_ALERT_KEY = "upgradeAlertKey";
+
 	private static final String upgradeUrl = "http://rick-li.github.io/midi-browser/";
-	private Activity ctx;
+	private final Activity ctx;
 	int versionCode = 0;
 	String versionNumber = "";
 
@@ -36,16 +45,30 @@ public class UpgradeChecker extends AsyncTask<String, Void, Boolean> {
 			PackageInfo pInfo = ctx.getPackageManager().getPackageInfo(
 					ctx.getPackageName(), 0);
 			Log.i(TAG, "Current version code " + pInfo.versionCode);
+			final SharedPreferences prefs = ctx
+					.getPreferences(Context.MODE_PRIVATE);
 			if (pInfo.versionCode < this.versionCode) {
+				// if (true) {
 				Log.i(TAG, "Creating dialog.");
+
+				if (!prefs.getBoolean(UPGRADE_SAVE_ALERT_KEY, true)) {
+					return;
+				}
+				View alertView = View.inflate(ctx, R.layout.alert, null);
+				final TextView alertContentView = (TextView) alertView
+						.findViewById(R.id.alertTextContent);
+				final CheckBox alertCheckbox = (CheckBox) alertView
+						.findViewById(R.id.alertCheckbox);
+				alertContentView.setText("檢測到新版本" + this.versionNumber
+						+ "，是否要升級?");
 				AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-				builder.setMessage("檢測到新版本" + this.versionNumber + "，是否要升級?");
-				builder.setPositiveButton("好",
+				builder.setView(alertView).setPositiveButton("好",
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
+
 								Intent i = new Intent(Intent.ACTION_VIEW);
 								i.setData(Uri.parse(upgradeUrl));
 								ctx.startActivity(i);
@@ -59,7 +82,11 @@ public class UpgradeChecker extends AsyncTask<String, Void, Boolean> {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-
+								if (alertCheckbox.isChecked()) {
+									prefs.edit()
+											.putBoolean(UPGRADE_SAVE_ALERT_KEY,
+													false).commit();
+								}
 							}
 
 						});
@@ -104,15 +131,14 @@ public class UpgradeChecker extends AsyncTask<String, Void, Boolean> {
 					if ("versionCode".equalsIgnoreCase(xpp.getName())) {
 						xpp.next();
 						versionCode = Integer.parseInt(xpp.getText());
-					} else if ("versionNumber".equalsIgnoreCase(xpp
-							.getName())) {
+					} else if ("versionNumber".equalsIgnoreCase(xpp.getName())) {
 						xpp.next();
 						versionNumber = xpp.getText();
 					}
 				}
 				eventType = xpp.next();
 			}
-			
+
 			Log.i(TAG, "New versionCode: " + versionCode);
 			Log.i(TAG, "versionNumber: " + versionNumber);
 			in.close();
