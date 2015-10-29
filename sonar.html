@@ -47,7 +47,7 @@
             <span id="currentTime">00:00:00</span>
         </h1>
 
-        <form action="#" onsubmit="initPosition({'coords':{'latitude':document.forms[0].lati.value,'longitude':document.forms[0].longi.value}}); return false;">
+        <form onsubmit="initPosition({'coords':{'latitude':document.forms[0].lati.value,'longitude':document.forms[0].longi.value}});return false;">
             <p id='manualInputForm'>
                 <b id="error" style="display:none;">自動定位失敗，請</b><b>手動輸入位置:</b>  <b>緯度</b>
                 <input type="text" name="lati" value="" class="address_input" size="10" /> <b>經度</b>
@@ -154,7 +154,7 @@
     var map;
     var geocoder;
 
-    function initPosition(position) {
+    window.initPosition = function(position) {
         clearTimer();
         window.geoPos = position;
         //s = position.coords.latitude + "," + position.coords.longitude;
@@ -183,7 +183,7 @@
         }
     }
     window.updateAddress = function(addr) {
-        console.log('addr is ', addr);
+//        console.log('addr is ', addr);
         var result = addr.results.length && addr.results[0];
 
         var loc = result.locations.length && result.locations[0];
