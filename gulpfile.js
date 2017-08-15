@@ -4,7 +4,7 @@ var gulp = require('gulp');
 
 var $ = require('gulp-load-plugins')();
 var jade = require('jade');
-// var qrcode = require('qrcode');
+ var qrcode = require('qrcode');
 
 var fs = require('fs');
 
@@ -19,10 +19,20 @@ gulp.task('jade', function() {
   });
 });
 
-// gulp.task('qr', function() {
-//   qrcode.save('./files/android.png', 'http://duosuccess.qiniudn.com/duosuccessmidi-browser1.2.6.apk');
-//   qrcode.save('./files/ios.png', 'https://itunes.apple.com/cn/app/id812021388');
-// });
+ gulp.task('qr', function() {
+   qrcode.save('./files/android.png', 'http://duosuccess.qiniudn.com/midibrowser-release1.9.apk', {
+  color: {
+    dark: '#00F',  // Blue dots
+    light: '#0000' // Transparent background
+  }
+}, function(){});
+   qrcode.save('./files/ios.png', 'https://itunes.apple.com/cn/app/id812021388', {
+  color: {
+    dark: '#00F',  // Blue dots
+    light: '#0000' // Transparent background
+  }
+}, function(){});
+ });
 
 // Connect
 gulp.task('connect', $.connect.server({
