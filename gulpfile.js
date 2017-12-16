@@ -35,11 +35,13 @@ gulp.task('jade', function() {
  });
 
 // Connect
-gulp.task('connect', $.connect.server({
-  root: ['./'],
-  port: 9000,
-  livereload: true
-}));
+gulp.task('connect', function(){
+    $.connect.server({
+    root: ['./'],
+    port: 9000,
+    livereload: true
+  });
+});
 
 
 // Watch
