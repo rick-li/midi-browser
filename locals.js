@@ -3,6 +3,7 @@
     "local": "zh",
     "desc": "多成中醫瀏覽器",
     "download": "下載",
+    "betadownload": "測試版下載",
     "local_download": "本地下載",
     "android": "安卓版",
     "qr": "二維碼",
