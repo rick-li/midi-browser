@@ -50,6 +50,9 @@ html
       .phoneonly{
         display:none;
       }
+      .china_download{
+        margin-left: 10px;
+      }
       @media screen and (max-width: 480px) {
         
         .phoneonly{
@@ -151,11 +154,12 @@ html
             h3 #{android} 1.2.8(20141102)
             h3
               a(href='https://s3-ap-northeast-1.amazonaws.com/duo-mob/midibrowser-release1.9.apk', onclick='') #{download} 
-
+              a.china_download(href='http://rick-test.oss-cn-shanghai.aliyuncs.com/test/midibrowser-release1.9.apk', onclick='') #{china_download} 
               a.phoneonly(href='files/android.png') #{qr}
             h3 #{android} Beta(20180811)
             h3
               a(href='https://s3-ap-northeast-1.amazonaws.com/duo-mob/midi-browser-beta-new+(1).apk', onclick='') #{download}   
+              a.china_download(href='http://rick-test.oss-cn-shanghai.aliyuncs.com/test/midi-browser-beta-new%2B%281%29.apk', onclick='') #{china_download}   
             strong #{android_desc}
             .store
               a(href='https://play.google.com/store/apps/details?id=com.duosuccess.midi')

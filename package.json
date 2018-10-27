@@ -12,7 +12,7 @@
     "gulp-jade": "latest",
     "wiredep": "4.0.0",
     "jade": "latest",
-    "qrcode": "latest"
+    "qrcode": "1.3.0"
   },
   "engines": {
     "node": ">=0.10.0"
