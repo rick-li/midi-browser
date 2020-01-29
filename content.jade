@@ -151,15 +151,11 @@ html
       section#main_content.inner
         .section.clear-fix
           .main
-            h3 #{android} 1.2.8(20141102)
+           
+            h3 #{android} 1.2.9(20180811)
             h3
-              a(href='https://s3-ap-northeast-1.amazonaws.com/duo-mob/midibrowser-release1.9.apk', onclick='') #{download} 
-              a.china_download(href='http://rick-test.oss-cn-shanghai.aliyuncs.com/test/midibrowser-release1.9.apk', onclick='') #{china_download} 
-              a.phoneonly(href='files/android.png') #{qr}
-            h3 #{android} Beta(20180811)
-            h3
-              a(href='https://s3-ap-northeast-1.amazonaws.com/duo-mob/midi-browser-beta-new+(1).apk', onclick='') #{download}   
-              a.china_download(href='http://rick-test.oss-cn-shanghai.aliyuncs.com/test/midi-browser-beta-new%2B%281%29.apk', onclick='') #{china_download}   
+              a.china_download(href='http://rick-test.oss-cn-shanghai.aliyuncs.com/test/midi-browser-beta-new%2B%281%29.apk', onclick='') #{china_download} 
+              a(href='https://s3-ap-northeast-1.amazonaws.com/duo-mob/midi-browser-beta-new+(1).apk', onclick='') #{download}
             strong #{android_desc}
             .store
               a(href='https://play.google.com/store/apps/details?id=com.duosuccess.midi')
@@ -180,69 +176,6 @@ html
             h6 #{ios_desc2}
           .side
             img.desktoponly.qr(src='files/ios.png')
-
-
-        .section
-          p
-            h3 #{chrome_plugin}
-            h3
-              a(href='https://chrome.google.com/webstore/detail/duosuccess-midi-plugin/dnjeeajofjjjcodkdegpahjbchljeeml' onclick="").
-                #{download}
-            h3
-              a(href='files/midiExt.crx', onclick="javascript:_hmt.push(['_trackEvent', 'midibrowser', 'download', 'chrome']);").
-                #{local_download}
-            strong #{chrome_plugin_desc}
-        
-        .section
-          p
-            h3 #{chrome}
-            h3
-              a(href='http://duosuccess.qiniudn.com/duosuccess%E5%A4%9A%E6%88%90%E6%B5%8F%E8%A7%88%E5%99%A8.7z', onclick="").
-                #{download}
-            h6 #{chrome_desc}
-
-        
-
-      section#deprecated
-        .inner
-          h2 #{deprecated_msg}
-
-          .section
-            p
-              h3 #{firefox}
-              h3
-                a(href='https://skydrive.live.com/redir?resid=CF632F96102640A8!291&authkey=!AP6chUUAsMKCdoM&ithint=file%2c.zip' onclick="").
-                  #{download}
-              h6 #{firefox_desc1}
-              h6 #{firefox_desc2}
-                strong
-                  a(href='images/qtmime.png') #{settings}
-              h6  #{firefox_desc3}
-
-          .section
-            p
-              h3 #{mac}
-              h3
-                a(href='files/midi-browser-mac.zip', onlick="").
-                  #{download}
-              h6 #{mac_desc}
-
-          .section
-            p
-              h3 #{java}
-              h3
-                a(href="files/midi-browser-java.zip", onclick="").
-                  #{download}
-              strong #{java_desc}
-
-          .section
-            p
-              h3 #{ios_old}
-              h3
-                a(href='itms-services://?action=download-manifest&url=https://dn-duosuccess.qbox.me/duosuccessmidi-browser.plist', onclick="").
-                  #{download}
-                a(href='images/qr_sicpc.png')
-              h6 #{ios_old_desc}
 
 
       #footer_wrap.outer
