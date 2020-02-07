@@ -20,12 +20,18 @@ gulp.task('jade', function() {
 });
 
  gulp.task('qr', function() {
-   qrcode.toFile('./files/android.png', 'https://s3-ap-northeast-1.amazonaws.com/duo-mob/midibrowser-release1.9.apk', {
-    color: {
-      dark: '#00F',  // Blue dots
-      light: '#0000' // Transparent background
-    }
-}, function(){});
+//    qrcode.toFile('./files/android.png', 'https://s3-ap-northeast-1.amazonaws.com/duo-mob/midibrowser-release1.9.apk', {
+//     color: {
+//       dark: '#00F',  // Blue dots
+//       light: '#0000' // Transparent background
+//     }
+// }, function(){});
+    qrcode.toFile('./files/android.png', 'http://rick-test.oss-cn-shanghai.aliyuncs.com/test/midi-browser-beta-new%2B%281%29.apk', {
+        color: {
+          dark: '#00F',  // Blue dots
+          light: '#0000' // Transparent background
+        }
+    }, function(){});
    qrcode.toFile('./files/ios.png', 'https://itunes.apple.com/cn/app/id812021388', {
     color: {
       dark: '#00F',  // Blue dots
