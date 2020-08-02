@@ -29,7 +29,8 @@
     "deprecated_msg": "以下版本即將停止維護",
     "ios_old": "IPHONE/IPAD 旧版",
     "ios_old_desc": "支持ios6.0以上手機和平板, 請使用Itunes/AppStore版本替代",
-    "contact": "联系方式"
+    "contact": "联系方式",
+    "chrome_plugin_timer": "谷歌瀏覽器插件-他維空間音樂定時播放"
   },
 
   "en": {
@@ -61,6 +62,7 @@
     "deprecated_msg": "Below browsers will be removed soon",
     "ios_old": "IPHONE/IPAD OLD",
     "ios_old_desc": "Support ios6.0+, Please use Itunes/AppStore version",
-    "contact": "Contact"
+    "contact": "Contact",
+    "chrome_plugin_timer": "Google plugin - other space music timer."
   }
 }
