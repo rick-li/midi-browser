@@ -30,7 +30,7 @@
     "ios_old": "IPHONE/IPAD 旧版",
     "ios_old_desc": "支持ios6.0以上手機和平板, 請使用Itunes/AppStore版本替代",
     "contact": "联系方式",
-    "chrome_plugin_timer": "谷歌瀏覽器插件-他維空間音樂定時播放"
+    "chrome_plugin_timer": "谷歌瀏覽器插件-他維空間音樂定時播放,將zip文件拖動到擴展介面即可。"
   },
 
   "en": {
@@ -63,6 +63,6 @@
     "ios_old": "IPHONE/IPAD OLD",
     "ios_old_desc": "Support ios6.0+, Please use Itunes/AppStore version",
     "contact": "Contact",
-    "chrome_plugin_timer": "Google plugin - other space music timer."
+    "chrome_plugin_timer": "Google plugin - other space music timer - drag the zip file to the extension page"
   }
 }
