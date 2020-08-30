@@ -1,0 +1,1 @@
+ipfs add  --ignore-rules-path=../midi-browser/.ipfsignore -r ../midi-browser
