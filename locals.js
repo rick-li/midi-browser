@@ -1,7 +1,7 @@
 {
   "zh": {
     "local": "zh",
-    "desc": "多成中醫瀏覽器(請優先使用多成網頁內的播放按鈕)",
+    "desc": "多成中醫瀏覽器",
     "download": "國外下載",
     "china_download": "國內下載",
     "betadownload": "測試版下載",
